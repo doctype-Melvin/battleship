@@ -1,3 +1,3 @@
-import './style.css';
-import './gameboard';
-import './ship';
+import './style';
+import Gameboard from './gameboard.js';
+import ship from './ship';

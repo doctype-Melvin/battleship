@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
+  "type": "module",
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "watch": "webpack --watch",
+    "watch": "jest --watch --verbose",
     "start": "webpack serve --open"
   },
   "keywords": [],
