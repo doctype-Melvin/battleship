@@ -3,6 +3,7 @@ const shipyard = (size) => {
     size,
     hits: 0,
     sunk: false,
+    position: [],
     hit() {
       this.hits += 1;
       return this.hits;
