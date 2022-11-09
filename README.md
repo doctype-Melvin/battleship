@@ -1,4 +1,5 @@
 # Battleship
+[Wikipedia page](https://en.wikipedia.org/wiki/Battleship_(game))
 
 ## Testing with JEST
 Quick recap: `==` uses type conversion before comparing two values; converts to primitive value.
