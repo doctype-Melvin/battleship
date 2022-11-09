@@ -1,21 +1,22 @@
-const ship = (type, length, orient) => ({
-  type,
-  length,
-  orient,
-  sunk: false,
-  hits: 0,
+const shipyard = (size) => {
+  const ship = {
+    size,
+    hits: 0,
+    sunk: false,
+    hit() {
+      this.hits += 1;
+      return this.hits;
+    },
+    isSunk() {
+      if (this.hits === this.size) {
+        this.sunk = true;
+      }
+      return this.sunk;
+    },
+  };
+  return {
+    ship,
+  };
+};
 
-  hit() {
-    this.hits += 1;
-    return this.hits;
-  },
-
-  isSunk() {
-    if (this.length === this.hits) {
-      this.sunk = true;
-    }
-    return this.sunk;
-  },
-});
-
-export default ship;
+export default shipyard;
