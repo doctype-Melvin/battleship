@@ -1,4 +1,4 @@
-import shipyard from './ship';
+import shipyard from './ship.js';
 
 const Gameboard = () => {
   const ocean = [];
@@ -8,6 +8,7 @@ const Gameboard = () => {
     }
   }
 
+  // Evaluates legal placement
   const isInbounds = (size, array, rotation = '') => { // call with position[0]
     let end = null;
     let bound = null;
@@ -29,21 +30,26 @@ const Gameboard = () => {
   const placeShip = (size, rotation = '', ...coord) => {
     const warship = shipyard(size).ship;
     warship.position.push([...coord]);
+
     if (isInbounds(size, warship.position[0], rotation)) {
       for (let i = 1; i < size; i += 1) {
         if (rotation !== '') { // Rotation is vertical
           warship.position.push(
             [warship.position[0][0], warship.position[0][1] - i],
           );
+        } else {
+          warship.position.push(
+            [warship.position[0][0] + i, warship.position[0][1]],
+          );
         }
-        warship.position.push(
-          [warship.position[0][0] + i, warship.position[0][1]],
-        );
       }
+      console.log(warship.position);
       return warship;
     }
+
     return null;
   };
+
   return {
     ocean,
     placeShip,
