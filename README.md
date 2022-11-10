@@ -1,5 +1,11 @@
 # Battleship
 [Wikipedia page](https://en.wikipedia.org/wiki/Battleship_(game))
+There are 5 ships:
+- Carrier (5)
+- Battleship (4)
+- Cruiser (3)
+- Submarine (3)
+- Destroyer (2)
 
 ## Testing with JEST
 Quick recap: `==` uses type conversion before comparing two values; converts to primitive value.
