@@ -1,31 +1,19 @@
-import Gameboard from './gameboard';
+import Battleship from './gameboard';
 
-describe('Gameboard factory function', () => {
-  const testGame = Gameboard();
+describe('Battleship gameboard', () => {
+  const board = Battleship().ocean;
   it('returns an array', () => {
-    expect(Array.isArray(Gameboard().ocean)).toEqual(true);
+    expect(Array.isArray(board)).toEqual(true);
   });
 
-  it('has a method of placing ships', () => {
-    expect(Gameboard().placeShip(2, 'V', 1, 2)).toBeDefined();
+  it('has a length of 100', () => {
+    expect(board).toHaveLength(100);
   });
 
-  test('"placeShip" returns array', () => {
-    expect(Array.isArray(Gameboard().placeShip(2, '', 0, 0))).toBeTruthy();
-  });
-
-  test('"isInbounds" returns true for legal placement of ship', () => {
-    expect(Gameboard().isInbounds(3, [7, 5])).toEqual(false);
-    expect(Gameboard().isInbounds(4, [2, 9], 'V')).toEqual(true);
-  });
-
-  test('"placeShip" tracks how many ships were placed', () => {
-    testGame.placeShip(2, '', 0, 2);
-    testGame.placeShip(3, 'V', 3, 4);
-    expect(testGame.inGame).toHaveLength(2);
-  });
-
-  it('has a method of preventing overlapping placements', () => {
-    expect(testGame.isOverlapping(testGame.inGame, [0, 2])).toEqual(true);
-  });
+  it.todo('contains arrays with two elements (coordinates and null)');
+  it.todo('has a method to place ships');
+  it.todo('has a method to avoid overlapping ships');
+  it.todo('tracks the number of ships placed or has a stash of ships');
+  it.todo('has a method to receive attacks');
+  it.todo('evaluates attack success');
 });
