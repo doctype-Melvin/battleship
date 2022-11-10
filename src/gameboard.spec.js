@@ -9,20 +9,20 @@ describe('Gameboard factory function', () => {
     expect(Gameboard().placeShip(2, 'V', 1, 2)).toBeDefined();
   });
 
-  it('"placeShip" returns array', () => {
+  test('"placeShip" returns array', () => {
     expect(Array.isArray(Gameboard().placeShip(2, '', 0, 0))).toBeTruthy();
   });
 
-  it('"placeShip" tracks how many ships were placed', () => {
+  test('"isInbounds" returns true for legal placement of ship', () => {
+    expect(Gameboard().isInbounds(3, [7, 5])).toEqual(false);
+    expect(Gameboard().isInbounds(4, [2, 9], 'V')).toEqual(true);
+  });
+
+  test('"placeShip" tracks how many ships were placed', () => {
     const testGame = Gameboard();
     testGame.placeShip(2, '', 0, 2);
     testGame.placeShip(4, '', 4, 3);
     expect(testGame.inGame).toHaveLength(2);
-  });
-
-  it('"isInbounds" returns true for legal placement of ship', () => {
-    expect(Gameboard().isInbounds(3, [7, 5])).toEqual(false);
-    expect(Gameboard().isInbounds(4, [2, 9], 'V')).toEqual(true);
   });
 
   it('has a method of preventing overlapping placements', () => {
