@@ -27,6 +27,7 @@ const Gameboard = () => {
     return false;
   };
 
+  const inGame = [];
   const placeShip = (size, rotation = '', ...coord) => {
     const warship = shipyard(size).ship;
     warship.position.push([...coord]);
@@ -43,8 +44,11 @@ const Gameboard = () => {
           );
         }
       }
-      console.log(warship.position);
-      return warship;
+      if (inGame.length < 5) {
+        inGame.push(warship);
+      }
+      console.table(inGame);
+      return inGame;
     }
 
     return null;
@@ -54,6 +58,7 @@ const Gameboard = () => {
     ocean,
     placeShip,
     isInbounds,
+    inGame,
   };
 };
 
