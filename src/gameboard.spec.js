@@ -1,6 +1,7 @@
 import Gameboard from './gameboard';
 
 describe('Gameboard factory function', () => {
+  const testGame = Gameboard();
   it('returns an array', () => {
     expect(Array.isArray(Gameboard().ocean)).toEqual(true);
   });
@@ -19,13 +20,12 @@ describe('Gameboard factory function', () => {
   });
 
   test('"placeShip" tracks how many ships were placed', () => {
-    const testGame = Gameboard();
     testGame.placeShip(2, '', 0, 2);
-    testGame.placeShip(4, '', 4, 3);
+    testGame.placeShip(3, 'V', 3, 4);
     expect(testGame.inGame).toHaveLength(2);
   });
 
   it('has a method of preventing overlapping placements', () => {
-
+    expect(testGame.isOverlapping(testGame.inGame, [0, 2])).toEqual(true);
   });
 });
