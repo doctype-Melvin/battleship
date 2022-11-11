@@ -2,6 +2,9 @@ import Gameboard from './gameboard';
 
 describe('Gameboard factory function', () => {
   const testGame = Gameboard();
+  const pos = [5, 5];
+  const pos2 = [7, 2];
+  const name = 'battleship';
 
   it('creates an array of length 100', () => {
     expect(Array.isArray(testGame.ocean)).toEqual(true);
@@ -17,15 +20,27 @@ describe('Gameboard factory function', () => {
     expect(testGame.SHIPS).toHaveLength(5);
   });
 
-  it('checks if ship is placed inbounds', () => {
-    expect(typeof testGame.isInbounds([0, 0], 'carrier')).toEqual('boolean');
-    expect(testGame.isInbounds([7, 0], 'carrier')).toEqual(false);
+  it('"isInbounds" checks if ship is placed inbounds', () => {
+    expect(typeof testGame.isInbounds(pos, name)).toEqual('boolean');
+    expect(testGame.isInbounds(pos, name)).toEqual(true);
+    testGame.rotateShip(name);
+    expect(testGame.getShipRotation(name)).toEqual('V');
+    expect(testGame.isInbounds(pos2, name)).toEqual(false);
   });
 
-  it('changes ship rotation', () => {
+  it('"rotateShip" changes ship rotation', () => {
     testGame.rotateShip('submarine');
     expect(testGame.getShipRotation('submarine')).toEqual('V');
     testGame.rotateShip('submarine');
     expect(testGame.getShipRotation('submarine')).toEqual('H');
   });
+
+  it('takes coordinates and creates the ship position', () => {
+    expect(Array.isArray(testGame.createPath(pos, name))).toEqual(true);
+    expect(testGame.createPath(pos, name)).toHaveLength(4);
+    expect(testGame.getShip(name).position).toHaveLength(4);
+  });
+
+  it.todo('checks if ship\'s paths overlap');
+  it.todo('has an array that stores all occupied cells');
 });

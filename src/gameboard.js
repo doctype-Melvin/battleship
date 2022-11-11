@@ -33,6 +33,8 @@ const Gameboard = () => {
     },
   ];
 
+  const getShip = (string) => SHIPS.find((item) => item.name === string).type;
+
   const getShipSize = (string) => SHIPS.find((item) => item.name === string).type.size;
 
   const getShipRotation = (string) => SHIPS.find((item) => item.name === string).type.rotation;
@@ -51,6 +53,20 @@ const Gameboard = () => {
     return (result);
   };
 
+  const createPath = (position, name) => {
+    const ship = getShip(name);
+    const path = [position];
+    for (let i = 1; i < ship.size; i += 1) {
+      if (ship.rotation === 'H') {
+        path.push([position[0] + i, position[1]]);
+      } else {
+        path.push([position[0], position[1] - i]);
+      }
+    }
+    ship.position = path;
+    return path;
+  };
+
   return {
     ocean,
     makeShip,
@@ -58,6 +74,8 @@ const Gameboard = () => {
     isInbounds,
     rotateShip,
     getShipRotation,
+    createPath,
+    getShip,
   };
 };
 
