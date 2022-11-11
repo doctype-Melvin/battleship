@@ -33,6 +33,8 @@ const Gameboard = () => {
     },
   ];
 
+  const inGame = [];
+
   const getShip = (string) => SHIPS.find((item) => item.name === string).type;
 
   const getShipSize = (string) => SHIPS.find((item) => item.name === string).type.size;
@@ -57,15 +59,25 @@ const Gameboard = () => {
     const ship = getShip(name);
     const path = [position];
     for (let i = 1; i < ship.size; i += 1) {
-      if (ship.rotation === 'H') {
-        path.push([position[0] + i, position[1]]);
-      } else {
+      if (ship.rotation !== 'H') {
         path.push([position[0], position[1] - i]);
+      } else {
+        path.push([position[0] + i, position[1]]);
       }
     }
     ship.position = path;
     return path;
   };
+
+  const placeShip = (position, name) => {
+    const ship = getShip(name);
+    if (isInbounds(position, name) && inGame.length < 1) {
+      inGame.push(ship);
+    }
+  };
+  // isOverlapping(position, name) {
+  //
+  // }
 
   return {
     ocean,
@@ -76,6 +88,8 @@ const Gameboard = () => {
     getShipRotation,
     createPath,
     getShip,
+    inGame,
+    placeShip,
   };
 };
 

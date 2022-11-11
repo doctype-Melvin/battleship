@@ -41,6 +41,11 @@ describe('Gameboard factory function', () => {
     expect(testGame.getShip(name).position).toHaveLength(4);
   });
 
+  it('has an array of all placed ships', () => {
+    expect(Array.isArray(testGame.inGame)).toEqual(true);
+    testGame.placeShip(pos, name);
+    expect(testGame.inGame).toHaveLength(1);
+  });
   it.todo('checks if ship\'s paths overlap');
   it.todo('has an array that stores all occupied cells');
 });
