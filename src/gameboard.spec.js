@@ -2,30 +2,30 @@ import Gameboard from './gameboard';
 
 describe('Gameboard factory function', () => {
   const testGame = Gameboard();
-  it('returns an array', () => {
-    expect(Array.isArray(Gameboard().ocean)).toEqual(true);
+
+  it('creates an array of length 100', () => {
+    expect(Array.isArray(testGame.ocean)).toEqual(true);
+    expect(testGame.ocean).toHaveLength(100);
   });
 
-  it('has a method of placing ships', () => {
-    expect(Gameboard().placeShip(2, 'V', 1, 2)).toBeDefined();
+  it('has a function that creates ship objects', () => {
+    expect(typeof testGame.makeShip()).toEqual('object');
   });
 
-  test('"placeShip" returns array', () => {
-    expect(Array.isArray(Gameboard().placeShip(2, '', 0, 0))).toBeTruthy();
+  it('has an array that stores the five ship types', () => {
+    expect(Array.isArray(testGame.SHIPS)).toEqual(true);
+    expect(testGame.SHIPS).toHaveLength(5);
   });
 
-  test('"isInbounds" returns true for legal placement of ship', () => {
-    expect(Gameboard().isInbounds(3, [7, 5])).toEqual(false);
-    expect(Gameboard().isInbounds(4, [2, 9], 'V')).toEqual(true);
+  it('checks if ship is placed inbounds', () => {
+    expect(typeof testGame.isInbounds([0, 0], 'carrier')).toEqual('boolean');
+    expect(testGame.isInbounds([7, 0], 'carrier')).toEqual(false);
   });
 
-  test('"placeShip" tracks how many ships were placed', () => {
-    testGame.placeShip(2, '', 0, 2);
-    testGame.placeShip(3, 'V', 3, 4);
-    expect(testGame.inGame).toHaveLength(2);
-  });
-
-  it('has a method of preventing overlapping placements', () => {
-    expect(testGame.isOverlapping(testGame.inGame, [0, 2])).toEqual(true);
+  it('changes ship rotation', () => {
+    testGame.rotateShip('submarine');
+    expect(testGame.getShipRotation('submarine')).toEqual('V');
+    testGame.rotateShip('submarine');
+    expect(testGame.getShipRotation('submarine')).toEqual('H');
   });
 });

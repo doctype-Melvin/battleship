@@ -4,6 +4,15 @@ const shipyard = (size) => {
     hits: 0,
     sunk: false,
     position: [],
+    rotation: 'H',
+    rotate() {
+      if (this.rotation === 'H') {
+        this.rotation = 'V';
+      } else {
+        this.rotation = 'H';
+      }
+      return this.rotation;
+    },
     hit() {
       this.hits += 1;
       return this.hits;
