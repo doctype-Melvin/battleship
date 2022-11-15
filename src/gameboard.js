@@ -67,7 +67,7 @@ const Gameboard = () => {
   const isOverlapping = (array, name) => {
     if (array.length > 0) {
       const shipPath = getShip(name).type.position;
-      const check = array.map((ship) => ship.position.map((element) => shipPath.some((el) => element.join() === el.join())));
+      const check = array.map((ship) => ship.type.position.map((element) => shipPath.some((el) => element.join() === el.join())));
       return check.flat().some((results) => results === true);
     }
     return false;
@@ -76,12 +76,12 @@ const Gameboard = () => {
   const placeShip = (position, name) => {
     // DOM if ship's position array is > 0
     // remove eventlistener
-    const ship = getShip(name).type;
+    const ship = getShip(name);
     if (inGame.length < 1 && isInbounds(position, name)) {
-      ship.position = createPath(position, name);
+      ship.type.position = createPath(position, name);
       inGame.push(ship);
     } else if (inGame.length > 0 && isInbounds(position, name)) {
-      ship.position = createPath(position, name);
+      ship.type.position = createPath(position, name);
       if (!isOverlapping(inGame, name)) {
         inGame.push(ship);
       }
