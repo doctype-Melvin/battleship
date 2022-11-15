@@ -52,11 +52,9 @@ describe('Gameboard factory function', () => {
     expect(testGame.isOverlapping(testGame.inGame, name2)).toEqual(true);
     expect(testGame.inGame).toHaveLength(1);
   });
-  it('has a method of evaluating attack success', () => {
+  it('has a method of placing and evaluating attacks', () => {
     expect(testGame.inGame).toHaveLength(1);
-    expect(testGame.placeAttack([5, 3])).toReturn();
-    // Take a coordinate and compare it to each ship's position array
-    // If it matches call the ship's hit method and check if it's destroyed
+    expect(typeof testGame.placeAttack([5, 3])).toEqual('boolean');
+    expect(testGame.tries).toHaveLength(1);
   });
-  it.todo('tracks placed attacks');
 });

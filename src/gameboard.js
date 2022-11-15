@@ -78,7 +78,6 @@ const Gameboard = () => {
     if (inGame.length < 1 && isInbounds(position, name)) {
       ship.position = createPath(position, name);
       inGame.push(ship);
-      // console.log(inGame[0]);
     } else if (inGame.length > 0 && isInbounds(position, name)) {
       ship.position = createPath(position, name);
       if (!isOverlapping(inGame, name)) {
@@ -88,8 +87,27 @@ const Gameboard = () => {
   };
 
   const tries = [];
-  const placeAttack = (coor) => SHIPS.map((ship) => ship.type.position.map((position) => position.join() === coor.join()));
-
+  const placeAttack = (coor) => {
+    // Todo: Return true or false to
+    // determine how the clicked cell
+    // should be displayed
+    const isPlayable = () => tries.every((item) => item.join() !== coor.join());
+    if (isPlayable(coor)) {
+      for (let i = 0; i < SHIPS.length; i += 1) {
+        for (let j = 0; j < SHIPS[i].type.position.length; j += 1) {
+          if (coor.join() === SHIPS[i].type.position[j].join()) {
+            SHIPS[i].type.hit();
+            // Call function that handles destroyed ship
+            // If (isSunk === true) do something
+            tries.push(coor);
+            return true;
+          }
+        }
+      }
+    }
+    tries.push(coor);
+    return false;
+  };
   return {
     ocean,
     makeShip,
@@ -102,6 +120,7 @@ const Gameboard = () => {
     placeShip,
     isOverlapping,
     placeAttack,
+    tries,
   };
 };
 
