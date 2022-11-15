@@ -35,14 +35,14 @@ const Gameboard = () => {
 
   const inGame = [];
 
-  const getShip = (string) => SHIPS.find((item) => item.name === string).type;
+  const getShip = (string) => SHIPS.find((item) => item.name === string);
 
   const rotateShip = (string) => SHIPS.find((item) => item.name === string).type.rotate();
 
   const isInbounds = (position, name) => {
-    const size = getShip(name).size - 1;
+    const size = getShip(name).type.size - 1;
     let lastCell = null;
-    if (getShip(name).rotation !== 'H') {
+    if (getShip(name).type.rotation !== 'H') {
       lastCell = [position[0], position[1] - size];
     } else {
       lastCell = [position[0] + size, position[1]];
@@ -53,7 +53,7 @@ const Gameboard = () => {
 
   const createPath = (position, name) => {
     const path = [position];
-    const ship = getShip(name);
+    const ship = getShip(name).type;
     for (let i = 1; i < ship.size; i += 1) {
       if (ship.rotation !== 'H') {
         path.push([position[0], position[1] - i]);
@@ -66,7 +66,7 @@ const Gameboard = () => {
 
   const isOverlapping = (array, name) => {
     if (array.length > 0) {
-      const shipPath = getShip(name).position;
+      const shipPath = getShip(name).type.position;
       const check = array.map((ship) => ship.position.map((element) => shipPath.some((el) => element.join() === el.join())));
       return check.flat().some((results) => results === true);
     }
@@ -74,7 +74,9 @@ const Gameboard = () => {
   };
 
   const placeShip = (position, name) => {
-    const ship = getShip(name);
+    // DOM if ship's position array is > 0
+    // remove eventlistener
+    const ship = getShip(name).type;
     if (inGame.length < 1 && isInbounds(position, name)) {
       ship.position = createPath(position, name);
       inGame.push(ship);
@@ -86,28 +88,32 @@ const Gameboard = () => {
     }
   };
 
+  const isSunkReport = (name) => `${name} has been wrecked`;
+
   const tries = [];
   const placeAttack = (coor) => {
-    // Todo: Return true or false to
-    // determine how the clicked cell
-    // should be displayed
+    // if isPlayable remove eventlistener after
+    // this way the cell will not be clickable
     const isPlayable = () => tries.every((item) => item.join() !== coor.join());
     if (isPlayable(coor)) {
+      tries.push(coor);
       for (let i = 0; i < SHIPS.length; i += 1) {
         for (let j = 0; j < SHIPS[i].type.position.length; j += 1) {
           if (coor.join() === SHIPS[i].type.position[j].join()) {
             SHIPS[i].type.hit();
-            // Call function that handles destroyed ship
-            // If (isSunk === true) do something
-            tries.push(coor);
+            if (SHIPS[i].type.isSunk()) {
+              return isSunkReport(SHIPS[i].name);
+            }
+
             return true;
           }
         }
       }
+      return false;
     }
-    tries.push(coor);
-    return false;
+    return 'played';
   };
+
   return {
     ocean,
     makeShip,
@@ -121,6 +127,7 @@ const Gameboard = () => {
     isOverlapping,
     placeAttack,
     tries,
+    isSunkReport,
   };
 };
 
