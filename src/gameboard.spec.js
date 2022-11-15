@@ -70,4 +70,9 @@ describe('Gameboard factory function', () => {
     expect(typeof testGame.isSunkReport(testGame.getShip('destroyer').name)).toEqual('string');
     expect(testGame.isSunkReport(testGame.getShip('destroyer').name)).toEqual('destroyer has been wrecked');
   });
+
+  it('seeks the next possible hit', () => {
+    expect(testGame.seekNext(testGame.success)).toHaveLength(4);
+    expect(testGame.success).toHaveLength(1);
+  });
 });

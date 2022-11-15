@@ -16,8 +16,11 @@ const player = (id) => ({
     const randomize = () => Math.floor(Math.random() * 9);
     const a = randomize();
     const b = randomize();
-    if (this.board.tries.every((item) => item.join() !== [a, b].join())) {
+    if (this.board.success.length < 1) {
       return this.board.placeAttack([a, b]);
+    } if (this.board.success.length > 0) {
+      const next = this.board.success.shift();
+      this.board.setAttack(next);
     }
     return this.setRandomAttack();
   },

@@ -91,6 +91,19 @@ const Gameboard = () => {
   const isSunkReport = (name) => `${name} has been wrecked`;
 
   const tries = [];
+  let success = [];
+  const seekNext = (arr) => {
+    const nexMoves = [];
+    for (let i = 1; i < 2; i += 1) {
+      nexMoves.push([arr[0][0] + i, arr[0][1]]);
+      nexMoves.push([arr[0][0] - i, arr[0][1]]);
+      nexMoves.push([arr[0][0], arr[0][1] + i]);
+      nexMoves.push([arr[0][0], arr[0][1] - i]);
+    }
+    success = [];
+    success = nexMoves;
+    return nexMoves;
+  };
   const placeAttack = (coor) => {
     // if isPlayable remove eventlistener after
     // this way the cell will not be clickable
@@ -101,7 +114,12 @@ const Gameboard = () => {
         for (let j = 0; j < SHIPS[i].type.position.length; j += 1) {
           if (coor.join() === SHIPS[i].type.position[j].join()) {
             SHIPS[i].type.hit();
+            if (success.length <= 1) { // if array is empty
+              success.push(coor); // push current hit array
+              seekNext(success); // create queue of next moves
+            }
             if (SHIPS[i].type.isSunk()) {
+              success = [];
               return isSunkReport(SHIPS[i].name);
             }
 
@@ -128,6 +146,8 @@ const Gameboard = () => {
     placeAttack,
     tries,
     isSunkReport,
+    success,
+    seekNext,
   };
 };
 
