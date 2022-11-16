@@ -16,12 +16,15 @@ const player = (id) => ({
     const randomize = () => Math.floor(Math.random() * 10);
     const x = randomize();
     const y = randomize();
+
     if (this.board.success.length > 0) {
       const next = this.board.success.shift();
       return this.board.placeAttack(next);
-    } if (this.board.isPlayable([x, y])) {
-      return this.board.placeAttack([x, y]);
     }
+    if (!this.board.isPlayable([x, y])) {
+      this.setRandomAttack();
+    }
+    return this.board.placeAttack([x, y]);
   },
 });
 
