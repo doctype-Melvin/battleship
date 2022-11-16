@@ -26,4 +26,9 @@ describe('Player factory function', () => {
     P1.board.placeAttack([1, 0]);
     expect(P1.board.success).toHaveLength(3);
   });
+
+  it('places ships randomly', () => {
+    P2.setRandomShip();
+    expect(P2.board.inGame).toHaveLength(5);
+  });
 });
