@@ -19,8 +19,9 @@ const player = (id) => ({
     if (this.board.success.length > 0) {
       const next = this.board.success.shift();
       return this.board.placeAttack(next);
+    } if (this.board.isPlayable([a, b])) {
+      return this.board.placeAttack([a, b]);
     }
-    return this.board.placeAttack([a, b]);
   },
 });
 

@@ -100,17 +100,22 @@ const Gameboard = () => {
     return false;
   };
 
+  const isPlayable = (coor) => tries.every((item) => item.join() !== coor.join());
   const makeQ = (arr) => {
-    if (isInRange(arr[0] + 1)) {
+    if (isInRange(arr[0] + 1)
+    && isPlayable([arr[0] + 1, arr[1]])) {
       success.push([arr[0] + 1, arr[1]]);
     }
-    if (isInRange(arr[0] - 1)) {
+    if (isInRange(arr[0] - 1)
+    && isPlayable([arr[0] - 1, arr[1]])) {
       success.push([arr[0] - 1, arr[1]]);
     }
-    if (isInRange(arr[1] + 1)) {
+    if (isInRange(arr[1] + 1)
+    && isPlayable([arr[0], arr[1] + 1])) {
       success.push([arr[0], arr[1] + 1]);
     }
-    if (isInRange(arr[1] - 1)) {
+    if (isInRange(arr[1] - 1)
+    && isPlayable([arr[0], arr[1] - 1])) {
       success.push([arr[0], arr[1] - 1]);
     }
   };
@@ -118,7 +123,6 @@ const Gameboard = () => {
   const placeAttack = (coor) => {
     // if isPlayable remove eventlistener after
     // this way the cell will not be clickable
-    const isPlayable = () => tries.every((item) => item.join() !== coor.join());
     if (isPlayable(coor)) {
       tries.push(coor);
       for (let i = 0; i < SHIPS.length; i += 1) {
@@ -155,6 +159,7 @@ const Gameboard = () => {
     isSunkReport,
     success,
     makeQ,
+    isPlayable,
   };
 };
 
