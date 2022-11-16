@@ -40,7 +40,6 @@ const player = (id) => ({
         this.setShip(this.randomize(), item.name);
       });
     }
-    this.board.inGame.forEach((item) => console.log(item.type.position));
   },
 });
 
