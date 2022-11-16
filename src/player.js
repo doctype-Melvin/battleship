@@ -28,9 +28,13 @@ const player = (id) => ({
   },
   setRandomShip() {
     while (this.board.inGame.length < this.board.SHIPS.length) {
-      this.board.SHIPS.map((item) => this.setShip(this.randomize(), item.name));
+      this.board.SHIPS.map((item) => {
+        this.board.SHIPS[Math.floor(Math.random() * 5)].type.rotate();
+        this.board.SHIPS[Math.floor(Math.random() * 5)].type.rotate();
+        this.setShip(this.randomize(), item.name);
+      });
     }
-    console.log(this.board.inGame);
+    this.board.inGame.forEach((item) => console.log(item.type.position));
   },
 });
 
