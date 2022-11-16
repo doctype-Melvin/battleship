@@ -91,19 +91,30 @@ const Gameboard = () => {
   const isSunkReport = (name) => `${name} has been wrecked`;
 
   const tries = [];
-  let success = [];
-  const seekNext = (arr) => {
-    const nexMoves = [];
-    for (let i = 1; i < 2; i += 1) {
-      nexMoves.push([arr[0][0] + i, arr[0][1]]);
-      nexMoves.push([arr[0][0] - i, arr[0][1]]);
-      nexMoves.push([arr[0][0], arr[0][1] + i]);
-      nexMoves.push([arr[0][0], arr[0][1] - i]);
+  const success = [];
+
+  const isInRange = (value) => {
+    if (value >= 0 && value <= 9) {
+      return true;
     }
-    success = [];
-    success = nexMoves;
-    return nexMoves;
+    return false;
   };
+
+  const makeQ = (arr) => {
+    if (isInRange(arr[0] + 1)) {
+      success.push([arr[0] + 1, arr[1]]);
+    }
+    if (isInRange(arr[0] - 1)) {
+      success.push([arr[0] - 1, arr[1]]);
+    }
+    if (isInRange(arr[1] + 1)) {
+      success.push([arr[0], arr[1] + 1]);
+    }
+    if (isInRange(arr[1] - 1)) {
+      success.push([arr[0], arr[1] - 1]);
+    }
+  };
+
   const placeAttack = (coor) => {
     // if isPlayable remove eventlistener after
     // this way the cell will not be clickable
@@ -114,22 +125,18 @@ const Gameboard = () => {
         for (let j = 0; j < SHIPS[i].type.position.length; j += 1) {
           if (coor.join() === SHIPS[i].type.position[j].join()) {
             SHIPS[i].type.hit();
-            if (success.length <= 1) { // if array is empty
-              success.push(coor); // push current hit array
-              seekNext(success); // create queue of next moves
-            }
-            if (SHIPS[i].type.isSunk()) {
-              success = [];
+            if (SHIPS[i].type.isSunk() !== true) {
+              makeQ(coor);
+            } if (SHIPS[i].type.isSunk()) {
+              success.length = 0;
               return isSunkReport(SHIPS[i].name);
             }
-
             return true;
           }
         }
       }
-      return false;
     }
-    return 'played';
+    return false;
   };
 
   return {
@@ -147,7 +154,7 @@ const Gameboard = () => {
     tries,
     isSunkReport,
     success,
-    seekNext,
+    makeQ,
   };
 };
 

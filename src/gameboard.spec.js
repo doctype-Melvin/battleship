@@ -54,11 +54,12 @@ describe('Gameboard factory function', () => {
     expect(testGame.isOverlapping(testGame.inGame, name2)).toEqual(true);
     expect(testGame.inGame).toHaveLength(1);
   });
+
   it('has a method of placing and evaluating attacks', () => {
     expect(testGame.inGame).toHaveLength(1);
     expect(typeof testGame.placeAttack([5, 3])).toEqual('boolean');
     expect(testGame.placeAttack([1, 3])).toEqual(false);
-    expect(testGame.placeAttack([1, 3])).toEqual('played');
+    expect(testGame.placeAttack([5, 3])).toEqual(false);
   });
 
   it('reports a destroyed ship', () => {
@@ -69,10 +70,5 @@ describe('Gameboard factory function', () => {
     expect(testGame.getShip(name3).type.isSunk()).toEqual(true);
     expect(typeof testGame.isSunkReport(testGame.getShip('destroyer').name)).toEqual('string');
     expect(testGame.isSunkReport(testGame.getShip('destroyer').name)).toEqual('destroyer has been wrecked');
-  });
-
-  it('seeks the next possible hit', () => {
-    expect(testGame.seekNext(testGame.success)).toHaveLength(4);
-    expect(testGame.success).toHaveLength(1);
   });
 });

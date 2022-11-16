@@ -3,8 +3,8 @@ import Gameboard from './gameboard';
 const player = (id) => ({
   id,
   board: Gameboard(),
-  setShip(a, b) {
-    this.board.placeShip(a, b);
+  setShip(pos, name) {
+    this.board.placeShip(pos, name);
   },
   setAttack(a) {
     return this.board.placeAttack(a);
@@ -13,16 +13,14 @@ const player = (id) => ({
     this.board.rotateShip(shipname);
   },
   setRandomAttack() {
-    const randomize = () => Math.floor(Math.random() * 9);
+    const randomize = () => Math.floor(Math.random() * 10);
     const a = randomize();
     const b = randomize();
-    if (this.board.success.length < 1) {
-      return this.board.placeAttack([a, b]);
-    } if (this.board.success.length > 0) {
+    if (this.board.success.length > 0) {
       const next = this.board.success.shift();
-      this.board.setAttack(next);
+      return this.board.placeAttack(next);
     }
-    return this.setRandomAttack();
+    return this.board.placeAttack([a, b]);
   },
 });
 
