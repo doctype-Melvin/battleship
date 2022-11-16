@@ -14,13 +14,13 @@ const player = (id) => ({
   },
   setRandomAttack() {
     const randomize = () => Math.floor(Math.random() * 10);
-    const a = randomize();
-    const b = randomize();
+    const x = randomize();
+    const y = randomize();
     if (this.board.success.length > 0) {
       const next = this.board.success.shift();
       return this.board.placeAttack(next);
-    } if (this.board.isPlayable([a, b])) {
-      return this.board.placeAttack([a, b]);
+    } if (this.board.isPlayable([x, y])) {
+      return this.board.placeAttack([x, y]);
     }
   },
 });
