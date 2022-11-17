@@ -2,6 +2,14 @@
     box-sizing: border-box;
 }
 
+:root {
+    --main-color: #AA5042;
+    --darker-shade: #753742;
+    --darkest-shade: #4F3130;
+    --lighter-shade: #D8BD8A;
+    --lightest-shade: #D8D78F;
+}
+
 html, body,
 .main {
     height: 100vh;
@@ -37,4 +45,14 @@ html, body,
 
 .menu {
     grid-area: controls;
+}
+
+.cell {
+    background-color: var(--lightest-shade);
+    border: solid 1px white;
+    border-radius: 10px;
+}
+
+.cell:hover {
+    cursor: pointer;
 }
