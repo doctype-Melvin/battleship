@@ -36,6 +36,28 @@ receive the response: 'ReferenceError: require is not defined in ES module scope
 To solve this problem, I went to my package.json an looked for a `type` property witch was 
 set to `module`. By removing this property and re-running npm, Webpack executed as expected.
 
+### Interesting insights
+I had to find a solution to the following problem:
+The script renders a 10x10 grid with each cell holding a coordinate. The order of cells was from top left to
+bottom right. This was contrary to the way the coordinates are being processed in the script. The desired order
+going from bottom left to bottom right has been achieved through the following CSS rules:
+```CSS
+/* reversing text direction for each board */
+#left, #right { 
+    height: 100%;
+    direction: rtl;
+}
+/* reversing text direction again for each item of the board */
+.gameboard > .cell {
+    direction: ltr;
+}
+/* rotating the board and its cells */
+.gameboard, .gameboard > .cell {
+    transform: rotate(180deg);
+}
+```
+I've found this solution delightful.
+
 ### Resources 
 [Paper](https://pageperso.lis-lab.fr/guilherme.fonseca/battleship_conf.pdf) discussing the most efficient algorithms for 
 battleship.
