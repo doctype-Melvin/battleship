@@ -23,6 +23,19 @@ However, the `.toEqual` matcher does the same equality test, is obviously named 
  but doesn't lead to confusing and unwanted side effects.
 `.toEqual` should be the default for comparisons in unit testing.
 
+### General quirks
+At some point I've accidentally added a `type: module` property to my `package.json` file.
+This caused me a bit of a headache since this lead to Webpack throwing an error. I've really
+didn't notice that. 
+Before finding the solution to this problem online, I've changed all my `imports` to
+`require` functions. The `require` is a built-in function of NodeJS that takes an external module,
+reads the file, executes and returns the export object - pretty much what I think the `import` 
+statement does. 
+After the above mentioned change, I ran into the problem that upon running `npm run build` I would
+receive the response: 'ReferenceError: require is not defined in ES module scope, you can use import instead'. 
+To solve this problem, I went to my package.json an looked for a `type` property witch was 
+set to `module`. By removing this property and re-running npm, Webpack executed as expected.
+
 ### Resources 
 [Paper](https://pageperso.lis-lab.fr/guilherme.fonseca/battleship_conf.pdf) discussing the most efficient algorithms for 
 battleship.

@@ -1,4 +1,4 @@
-import player from './player.js';
+const player = require('./player');
 
 describe.skip('Player factory function', () => {
   const P1 = player('human');

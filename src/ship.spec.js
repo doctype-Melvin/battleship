@@ -1,4 +1,4 @@
-import shipyard from './ship';
+const shipyard = require('./ship');
 
 describe('shipyard factory function', () => {
   const tester = shipyard(2);

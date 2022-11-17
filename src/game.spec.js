@@ -1,6 +1,4 @@
-import player from './player';
-import Gameboard from './gameboard';
-import battleship from './game';
+const battleship = require('./game');
 
 describe('Game loop module', () => {
   it('Initializes two players and the respective gameboards', () => {

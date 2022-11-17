@@ -1,4 +1,4 @@
-import Gameboard from './gameboard';
+const Gameboard = require('./gameboard');
 
 const player = (id) => ({
   id,

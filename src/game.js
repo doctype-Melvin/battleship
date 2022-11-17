@@ -1,4 +1,4 @@
-import player from './player';
+const player = require('./player');
 
 const battleship = (() => {
   const P1 = player('human');

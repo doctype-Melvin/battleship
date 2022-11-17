@@ -1,4 +1,4 @@
-import Gameboard from './gameboard';
+const Gameboard = require('./gameboard');
 
 describe.skip('Gameboard factory function', () => {
   const testGame = Gameboard();

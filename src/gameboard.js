@@ -1,4 +1,4 @@
-import shipyard from './ship.js';
+const shipyard = require('./ship');
 
 const Gameboard = () => {
   const ocean = [];
