@@ -163,4 +163,4 @@ const Gameboard = () => {
   };
 };
 
-export default Gameboard;
+module.exports = Gameboard;

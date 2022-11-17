@@ -1,6 +1,6 @@
 const shipyard = require('./ship');
 
-describe('shipyard factory function', () => {
+describe.skip('shipyard factory function', () => {
   const tester = shipyard(2);
   it('returns an object with a size value set to input', () => {
     expect(tester.ship.size).toEqual(2);

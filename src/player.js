@@ -43,4 +43,4 @@ const player = (id) => ({
   },
 });
 
-export default player;
+module.exports = player;

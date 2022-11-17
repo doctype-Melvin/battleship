@@ -29,4 +29,4 @@ const shipyard = (size) => {
   };
 };
 
-export default shipyard;
+module.exports = shipyard;
