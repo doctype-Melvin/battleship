@@ -1,6 +1,6 @@
 const battleship = require('./game');
 
-describe('Game loop module', () => {
+describe.skip('Game loop module', () => {
   it('Initializes two players and the respective gameboards', () => {
     expect(battleship().human.board.ocean).toHaveLength(100);
     expect(battleship().bot.board.inGame).toHaveLength(5);

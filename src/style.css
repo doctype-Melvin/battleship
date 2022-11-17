@@ -55,4 +55,9 @@ html, body,
 
 .cell:hover {
     cursor: pointer;
+    background-color: var(--lighter-shade);
+}
+
+.cell:active {
+    background-color: white;
 }

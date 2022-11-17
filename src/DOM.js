@@ -10,6 +10,7 @@ const createGrid = (hand) => {
     container.append(cell);
     grid = document.querySelectorAll('.cell');
   }
+  return { grid };
 };
 
 module.exports = createGrid;
