@@ -11,14 +11,26 @@ html, body,
 
 .main {
     display: grid;
-    grid-template-rows: 1fr 5fr 1fr;
-    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+    grid-template-rows: 1fr 5fr 0.5fr;
+    grid-template-columns: 0.5fr 2fr 1fr 2fr .5fr;
     grid-template-areas: 
     "header header header header header"
-    " . gameboard controls gameboard ."
+    " . leftBoard controls rightBoard ."
     "footer footer footer footer footer";
 }
 
 .header {
     grid-area: header;
+}
+
+#left {
+    grid-area: leftBoard;
+}
+
+#right {
+    grid-area: rightBoard;
+}
+
+.menu {
+    grid-area: controls;
 }
