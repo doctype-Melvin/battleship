@@ -23,6 +23,10 @@ html, body,
     grid-area: header;
 }
 
+#left, #right {
+    height: 100%;
+}
+
 #left {
     grid-area: leftBoard;
 }
