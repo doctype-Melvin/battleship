@@ -1,3 +1,5 @@
+const Gameboard = require('./gameboard');
+
 const createGrid = (hand) => {
   let grid = null;
   const container = document.getElementById(hand);
@@ -8,7 +10,9 @@ const createGrid = (hand) => {
     const cell = document.createElement('div');
     cell.classList.add('cell');
     container.append(cell);
+    cell.setAttribute('datacoor', JSON.stringify(Gameboard().ocean[i]));
     grid = document.querySelectorAll('.cell');
+    console.log(Gameboard().ocean[i]);
   }
   return { grid };
 };
