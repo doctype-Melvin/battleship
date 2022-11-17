@@ -143,6 +143,8 @@ const Gameboard = () => {
     return false;
   };
 
+  const getTriesLength = () => tries.length;
+
   return {
     ocean,
     makeShip,
@@ -160,6 +162,7 @@ const Gameboard = () => {
     success,
     makeQ,
     isPlayable,
+    getTriesLength,
   };
 };
 

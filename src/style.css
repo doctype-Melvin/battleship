@@ -2,12 +2,23 @@
     box-sizing: border-box;
 }
 
-html, body {
+html, body,
+.main {
     height: 100vh;
     padding: 0;
     margin: 0;
 }
 
-h1 {
-    color: red;
+.main {
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+    grid-template-areas: 
+    "header header header header header"
+    " . gameboard controls gameboard ."
+    "footer footer footer footer footer";
+}
+
+.header {
+    grid-area: header;
 }

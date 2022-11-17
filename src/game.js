@@ -1,17 +1,26 @@
 const player = require('./player');
 
-const battleship = (() => {
-  const init = () => {
-    const P1 = player('human');
-    const P2 = player('cpu');
+const battleship = () => {
+  let human = player('human');
+  let bot = player('bot');
+
+  if (bot.board.inGame < 5) {
+    bot.setRandomShip();
+  }
+
+  const gameReset = () => {
+    human = player('human');
+    bot = player('bot');
     return {
-      P1,
-      P2,
+      human,
+      bot,
     };
   };
   return {
-    init,
+    human,
+    bot,
+    gameReset,
   };
-})();
+};
 
-export default battleship;
+module.exports = battleship;
