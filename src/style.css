@@ -33,6 +33,15 @@ html, body,
 
 #left, #right {
     height: 100%;
+    direction: rtl;
+}
+
+.gameboard > .cell {
+    direction: ltr;
+}
+
+.gameboard, .gameboard > .cell {
+    transform: rotate(180deg);
 }
 
 #left {
