@@ -5,8 +5,7 @@ const battleship = () => {
   let human = player('human');
   let bot = player('bot');
   DOM().Menu();
-  DOM().Grid('left').createGrid();
-  DOM().Grid('right').createGrid();
+  DOM().Grid('right', 'left');
   if (bot.board.inGame < 5) {
     bot.setRandomShip();
   }

@@ -2,23 +2,30 @@ const Gameboard = require('./gameboard');
 
 const DOM = () => {
   // Grid factory
-  const Grid = (hand) => {
+  const Grid = (...grids) => {
     let grid = null;
-    const container = document.getElementById(hand);
-    container.style.display = 'grid';
-    container.style.gridTemplateRows = 'repeat(10, 1fr)';
-    container.style.gridTemplateColumns = 'repeat(10, 1fr)';
 
-    const createGrid = () => {
+    const createGrid = (board) => {
       for (let i = 0; i < 100; i += 1) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
-        container.append(cell);
+        board.append(cell);
         cell.setAttribute('datacoor', JSON.stringify(Gameboard().ocean[i]));
         grid = document.querySelectorAll('.cell');
       }
+      grid.forEach((cell) => cell.addEventListener('click', (e) => {
+        console.log(e.target);
+      }));
       return { grid };
     };
+
+    grids.forEach((side) => {
+      const container = document.getElementById(side);
+      container.style.display = 'grid';
+      container.style.gridTemplateRows = 'repeat(10, 1fr)';
+      container.style.gridTemplateColumns = 'repeat(10, 1fr)';
+      createGrid(container);
+    });
 
     const resetGrid = () => {
       while (container.firstChild) {
@@ -27,7 +34,6 @@ const DOM = () => {
     };
 
     return {
-      createGrid,
       resetGrid,
     };
   };
