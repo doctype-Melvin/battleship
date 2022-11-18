@@ -34,6 +34,15 @@ const DOM = () => {
 
   const Menu = () => {
     const container = document.querySelector('.menu');
+    const score = document.createElement('div');
+    const info = document.createElement('div');
+    const harbor = document.createElement('div');
+    const rotate = document.createElement('button');
+    score.textContent = 'Score';
+    info.textContent = 'This game is under construction';
+    harbor.textContent = 'Carrier, Battleship, Submarine, Cruiser, Destroyer';
+    rotate.textContent = 'Rotate Ship';
+    container.append(score, info, harbor, rotate);
   };
 
   return {

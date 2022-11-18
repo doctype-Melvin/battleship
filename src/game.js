@@ -4,6 +4,7 @@ const DOM = require('./DOM');
 const battleship = () => {
   let human = player('human');
   let bot = player('bot');
+  DOM().Menu();
   DOM().Grid('left').createGrid();
   DOM().Grid('right').createGrid();
   if (bot.board.inGame < 5) {
