@@ -6,6 +6,7 @@ const Grid = (hand) => {
   container.style.display = 'grid';
   container.style.gridTemplateRows = 'repeat(10, 1fr)';
   container.style.gridTemplateColumns = 'repeat(10, 1fr)';
+
   const createGrid = () => {
     for (let i = 0; i < 100; i += 1) {
       const cell = document.createElement('div');
@@ -16,8 +17,16 @@ const Grid = (hand) => {
     }
     return { grid };
   };
+
+  const resetGrid = () => {
+    while (container.firstChild) {
+      container.removeChild(container.lastChild);
+    }
+  };
+
   return {
     createGrid,
+    resetGrid,
   };
 };
 
