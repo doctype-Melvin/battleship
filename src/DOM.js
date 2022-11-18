@@ -4,7 +4,6 @@ const DOM = () => {
   // Grid factory
   const Grid = (...grids) => {
     let grid = null;
-
     const createGrid = (board) => {
       for (let i = 0; i < 100; i += 1) {
         const cell = document.createElement('div');
@@ -13,6 +12,7 @@ const DOM = () => {
         cell.setAttribute('datacoor', JSON.stringify(Gameboard().ocean[i]));
         grid = document.querySelectorAll('.cell');
       }
+      console.log(grid);
       grid.forEach((cell) => cell.addEventListener('click', (e) => {
         console.log(e.target);
       }));
