@@ -60,6 +60,26 @@ html, body,
     justify-content: space-around;
 }
 
+.score {
+    font-size: 1.15rem;
+}
+
+.info {
+    background-color: var(--lightest-shade);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.harbor {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.ship {
+    margin: 5px 0;
+}
+
 .cell {
     background-color: var(--lightest-shade);
     border: solid 1px white;
