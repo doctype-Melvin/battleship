@@ -1,11 +1,11 @@
 const player = require('./player');
-const Grid = require('./DOM');
+const DOM = require('./DOM');
 
 const battleship = () => {
   let human = player('human');
   let bot = player('bot');
-  Grid('left').createGrid();
-  Grid('right').createGrid();
+  DOM().Grid('left').createGrid();
+  DOM().Grid('right').createGrid();
   if (bot.board.inGame < 5) {
     bot.setRandomShip();
   }
@@ -13,8 +13,8 @@ const battleship = () => {
   const gameReset = () => {
     human = player('human');
     bot = player('bot');
-    Grid('left');
-    Grid('right');
+    DOM().Grid('left');
+    DOM().Grid('right');
     return {
       human,
       bot,
