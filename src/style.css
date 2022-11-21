@@ -52,6 +52,14 @@ html, body,
     grid-area: rightBoard;
 }
 
+#left, #right {
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+}
+
+
+
 .menu {
     grid-area: controls;
     display: flex;
@@ -80,17 +88,19 @@ html, body,
     margin: 5px 0;
 }
 
-.cell {
+.cellLeft, .cellRight {
     background-color: var(--lightest-shade);
     border: solid 1px white;
     border-radius: 10px;
 }
 
-.cell:hover {
+.cellLeft:hover, 
+.cellRight:hover {
     cursor: pointer;
     background-color: var(--lighter-shade);
 }
 
-.cell:active {
+.cellLeft:active,
+.cellRight:active {
     background-color: white;
 }

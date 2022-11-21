@@ -3,34 +3,42 @@ const Gameboard = require('./gameboard');
 const DOM = () => {
   // Grid factory
   const Grid = (...grids) => {
-    let grid = null;
-    const createGrid = (board) => {
+    let gridLeft = null;
+    let gridRight = null;
+    const createGrid = (side) => {
       for (let i = 0; i < 100; i += 1) {
+        const container = document.getElementById(side);
         const cell = document.createElement('div');
-        cell.classList.add('cell');
-        board.append(cell);
         cell.setAttribute('datacoor', JSON.stringify(Gameboard().ocean[i]));
-        grid = document.querySelectorAll('.cell');
+        if (side === 'left') {
+          cell.classList.add('cellLeft');
+        } else {
+          cell.classList.add('cellRight');
+        }
+        container.append(cell);
+        gridLeft = document.querySelectorAll('.cellLeft');
+        gridRight = document.querySelectorAll('.cellRight');
       }
-      console.log(grid);
-      grid.forEach((cell) => cell.addEventListener('click', (e) => {
-        console.log(e.target);
-      }));
-      return { grid };
     };
+    grids.forEach((side) => createGrid(side));
 
-    grids.forEach((side) => {
+    gridLeft.forEach((cell) => cell.addEventListener('click', (e) => {
+      console.log(e.target);
+    }));
+
+    gridRight.forEach((cell) => cell.addEventListener('click', (e) => {
+      console.log(e.target);
+    }));
+
+    const reset = (side) => {
       const container = document.getElementById(side);
-      container.style.display = 'grid';
-      container.style.gridTemplateRows = 'repeat(10, 1fr)';
-      container.style.gridTemplateColumns = 'repeat(10, 1fr)';
-      createGrid(container);
-    });
-
-    const resetGrid = () => {
       while (container.firstChild) {
         container.removeChild(container.lastChild);
       }
+    };
+
+    const resetGrid = (...boards) => {
+      boards.forEach((board) => reset(board));
     };
 
     return {
@@ -55,10 +63,13 @@ const DOM = () => {
     Gameboard().SHIPS.forEach((ship) => harbor.append(makeShipBtn(ship.name)));
     const rotate = document.createElement('button');
     rotate.classList.add('rotate');
+    const reset = document.createElement('button');
+    reset.classList.add('reset');
     score.textContent = 'Score';
     info.textContent = 'This game is under construction';
     rotate.textContent = 'Rotate Ship';
-    container.append(score, info, harbor, rotate);
+    reset.textContent = 'Reset';
+    container.append(score, info, harbor, rotate, reset);
   };
 
   return {
