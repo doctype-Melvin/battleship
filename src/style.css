@@ -88,19 +88,3 @@ html, body,
     margin: 5px 0;
 }
 
-.cellLeft, .cellRight {
-    background-color: var(--lightest-shade);
-    border: solid 1px white;
-    border-radius: 10px;
-}
-
-.cellLeft:hover, 
-.cellRight:hover {
-    cursor: pointer;
-    background-color: var(--lighter-shade);
-}
-
-.cellLeft:active,
-.cellRight:active {
-    background-color: white;
-}
