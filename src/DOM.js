@@ -22,9 +22,7 @@ const DOM = () => {
     };
     grids.forEach((side) => createGrid(side));
 
-    gridLeft.forEach((cell) => cell.addEventListener('click', (e) => {
-      console.log(e.target);
-    }));
+    const placeShipLeft = () => gridLeft.forEach((cell) => cell.addEventListener('click', (e) => console.log(e.target)));
 
     gridRight.forEach((cell) => cell.addEventListener('click', (e) => {
       console.log(e.target);
@@ -43,6 +41,9 @@ const DOM = () => {
 
     return {
       resetGrid,
+      gridLeft,
+      gridRight,
+      placeShipLeft,
     };
   };
 
@@ -54,6 +55,7 @@ const DOM = () => {
     info.classList.add('info');
     const harbor = document.createElement('div');
     harbor.classList.add('harbor');
+    // Ship Btns
     const makeShipBtn = (name) => {
       const btn = document.createElement('button');
       btn.classList.add('ship');
@@ -61,6 +63,7 @@ const DOM = () => {
       return btn;
     };
     Gameboard().SHIPS.forEach((ship) => harbor.append(makeShipBtn(ship.name)));
+
     const rotate = document.createElement('button');
     rotate.classList.add('rotate');
     const reset = document.createElement('button');
@@ -70,6 +73,17 @@ const DOM = () => {
     rotate.textContent = 'Rotate Ship';
     reset.textContent = 'Reset';
     container.append(score, info, harbor, rotate, reset);
+
+    const shipBtns = document.querySelectorAll('.ship');
+    shipBtns.forEach((btn) => btn.addEventListener('click', async (e) => {
+      try {
+        const name = await e.target.textContent.toLowerCase();
+        const shipSize = await Gameboard().getShip(name).type.size;
+        console.log(shipSize);
+      } catch (err) {
+        console.log('Error');
+      }
+    }));
   };
 
   return {
