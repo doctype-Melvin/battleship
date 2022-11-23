@@ -44,12 +44,17 @@ const Gameboard = () => {
   };
 
   const placeShip = (string, coor) => {
-    const ship = getShip(string);
-    const path = [];
+    const ship = getShip(string).type;
     if (inbounds(string, coor)) {
-      path.push('success');
+      for (let i = 0; i < ship.size; i += 1) {
+        if (ship.rotation !== 'H') {
+          ship.position.push([coor[0], coor[1] - i]);
+        }
+        ship.position.push([coor[0] + i, coor[1]]);
+      }
     }
-    return path;
+    ship.position.forEach((cell) => occupied.push(cell));
+    return occupied;
   };
 
   return {

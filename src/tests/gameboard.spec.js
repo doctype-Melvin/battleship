@@ -17,10 +17,10 @@ describe('controller module', () => {
     expect(Gameboard().inbounds('carrier', [0, 0])).toEqual(true);
   });
 
-  // it('places ships and tracks their position', () => {
-  //   expect(Array.isArray(Gameboard().occupied)).toBeTruthy();
-  //   expect(Gameboard().placeShip('battleship', [0, 0])).toHaveLength(4);
-  // });
+  it('places ships and tracks their position', () => {
+    expect(Array.isArray(Gameboard().occupied)).toBeTruthy();
+    expect(Gameboard().placeShip('battleship', [0, 0])).toHaveLength(4);
+  });
 
   // it('checks for overlapping ships', () => {
   //   expect(typeof Gameboard().overlaps('submarine', [1, 1])).toEqual('boolean')
