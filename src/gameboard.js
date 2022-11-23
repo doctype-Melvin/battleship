@@ -30,6 +30,8 @@ const Gameboard = () => {
     }
   }
 
+  const occupied = [];
+
   const getShip = (string) => SHIPS.find((obj) => obj.name === string);
 
   const inbounds = (string, coor) => {
@@ -43,6 +45,7 @@ const Gameboard = () => {
   return {
     SHIPS,
     ocean,
+    occupied,
     getShip,
     inbounds,
   };

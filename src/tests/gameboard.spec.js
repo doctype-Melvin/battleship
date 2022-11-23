@@ -16,4 +16,12 @@ describe('controller module', () => {
   it('checks for inbounds placement', () => {
     expect(typeof Gameboard().inbounds('carrier', [8, 0])).toEqual('boolean');
   });
+
+  it('places ships and tracks their position', () => {
+    expect(Array.isArray(Gameboard().occupied)).toBeTruthy();
+  });
+
+  // it('checks for overlapping ships', () => {
+  //   expect(typeof Gameboard().overlaps('submarine', [1, 1])).toEqual('boolean')
+  // })
 });
