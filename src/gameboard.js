@@ -32,9 +32,10 @@ const Gameboard = () => {
   }
 
   const inGame = [];
-  const tries = [];
   const occupied = [];
+  const tries = [];
   const success = [];
+  const destroyed = [];
 
   const getShip = (string) => SHIPS.find((obj) => obj.name === string);
 
@@ -68,6 +69,8 @@ const Gameboard = () => {
 
   const checkTries = (coor) => tries.every((element) => element.join() !== coor.join());
   const hitsShip = (coor) => occupied.some((element) => element.join() === coor.join());
+  const reportLoss = (string) => `${string} has been destroyed`;
+  const gameOver = () => ((inGame.length === destroyed.length));
 
   const placeAttack = (coor) => {
     let object;
@@ -76,6 +79,13 @@ const Gameboard = () => {
         object = SHIPS.find((ship) => ship.type.position.some((item) => item.join() === coor.join()));
         object.type.hit();
         success.push(coor);
+        if (object.type.isSunk()) {
+          destroyed.push(object);
+          reportLoss(object.name);
+          if (gameOver()) {
+            return 'Game Over';
+          }
+        }
       }
       tries.push(coor);
     }
@@ -96,6 +106,7 @@ const Gameboard = () => {
     checkTries,
     hitsShip,
     placeAttack,
+    reportLoss,
   };
 };
 
