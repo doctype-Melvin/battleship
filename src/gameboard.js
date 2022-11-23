@@ -1,26 +1,26 @@
-const ship = require('./ship');
+const shipMaker = require('./ship');
 
 const Gameboard = () => {
   const SHIPS = [
     {
       name: 'carrier',
-      type: ship('carrier', 5),
+      type: shipMaker('carrier', 5),
     },
     {
       name: 'battleship',
-      type: ship('battleship', 4),
+      type: shipMaker('battleship', 4),
     },
     {
       name: 'cruiser',
-      type: ship('cruiser', 3),
+      type: shipMaker('cruiser', 3),
     },
     {
       name: 'submarine',
-      type: ship('submarine', 3),
+      type: shipMaker('submarine', 3),
     },
     {
       name: 'destroyer',
-      type: ship('destroyer', 2),
+      type: shipMaker('destroyer', 2),
     },
   ];
   const ocean = [];
@@ -30,12 +30,21 @@ const Gameboard = () => {
     }
   }
 
-  const getShip = (string) => SHIPS.find((ship) => ship.name === string);
+  const getShip = (string) => SHIPS.find((obj) => obj.name === string);
+
+  const inbounds = (string, coor) => {
+    const ship = getShip(string);
+    if (ship.type.rotation === 'H') {
+      return ocean.some((element) => element.join() === [coor[0] + ship.size, coor[1]].join());
+    }
+    return ocean.some((element) => element.join() === [coor[0], coor[1] - ship.size].join());
+  };
 
   return {
     SHIPS,
     ocean,
     getShip,
+    inbounds,
   };
 };
 

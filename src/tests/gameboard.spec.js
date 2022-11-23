@@ -12,4 +12,8 @@ describe('controller module', () => {
   it('looks up ships in the array', () => {
     expect(typeof Gameboard().getShip('destroyer')).toEqual('object');
   });
+
+  it('checks for inbounds placement', () => {
+    expect(typeof Gameboard().inbounds('carrier', [8, 0])).toEqual('boolean');
+  });
 });
