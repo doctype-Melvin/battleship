@@ -4,23 +4,23 @@ const Gameboard = () => {
   const SHIPS = [
     {
       name: 'carrier',
-      type: shipMaker('carrier', 5),
+      type: shipMaker(5),
     },
     {
       name: 'battleship',
-      type: shipMaker('battleship', 4),
+      type: shipMaker(4),
     },
     {
       name: 'cruiser',
-      type: shipMaker('cruiser', 3),
+      type: shipMaker(3),
     },
     {
       name: 'submarine',
-      type: shipMaker('submarine', 3),
+      type: shipMaker(3),
     },
     {
       name: 'destroyer',
-      type: shipMaker('destroyer', 2),
+      type: shipMaker(2),
     },
   ];
   const ocean = [];
@@ -31,8 +31,10 @@ const Gameboard = () => {
     }
   }
 
+  const inGame = [];
   const tries = [];
   const occupied = [];
+  const success = [];
 
   const getShip = (string) => SHIPS.find((obj) => obj.name === string);
 
@@ -59,18 +61,41 @@ const Gameboard = () => {
     }
     if (!overlaps(path)) {
       path.forEach((cell) => occupied.push(cell) && ship.position.push(cell));
+      inGame.push(ship);
     }
     return occupied;
+  };
+
+  const checkTries = (coor) => tries.every((element) => element.join() !== coor.join());
+  const hitsShip = (coor) => occupied.some((element) => element.join() === coor.join());
+
+  const placeAttack = (coor) => {
+    let object;
+    if (checkTries(coor)) {
+      if (hitsShip(coor)) {
+        object = SHIPS.find((ship) => ship.type.position.some((item) => item.join() === coor.join()));
+        object.type.hit();
+        success.push(coor);
+      }
+      tries.push(coor);
+    }
+    return tries;
   };
 
   return {
     SHIPS,
     ocean,
+    inGame,
     occupied,
+    tries,
+    success,
     getShip,
     inbounds,
     overlaps,
     placeShip,
+    checkTries,
+    hitsShip,
+    placeAttack,
   };
 };
 

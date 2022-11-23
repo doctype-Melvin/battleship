@@ -26,4 +26,16 @@ describe('controller module', () => {
     expect(typeof Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual('boolean');
     expect(Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual(false);
   });
+
+  it('places attacks', () => {
+    const testGame = Gameboard();
+    const testShip = testGame.placeShip('battleship', [0, 0]);
+    expect(testGame.inGame).toHaveLength(1);
+    expect(testShip).toHaveLength(4);
+    expect(testGame.checkTries([0, 0])).toBeTruthy();
+    expect(testGame.hitsShip([0, 0])).toBeTruthy();
+    expect(testGame.placeAttack([0, 0])).toBeDefined();
+    expect(testGame.tries).toHaveLength(1);
+    expect(testGame.success).toHaveLength(1);
+  });
 });
