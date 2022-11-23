@@ -22,7 +22,8 @@ describe('controller module', () => {
     expect(Gameboard().placeShip('battleship', [0, 0])).toHaveLength(4);
   });
 
-  // it('checks for overlapping ships', () => {
-  //   expect(typeof Gameboard().overlaps('submarine', [1, 1])).toEqual('boolean')
-  // })
+  it('checks for overlapping ships', () => {
+    expect(typeof Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual('boolean');
+    expect(Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual(false);
+  });
 });
