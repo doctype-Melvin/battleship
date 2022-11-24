@@ -15,6 +15,7 @@ html, body,
     height: 100vh;
     padding: 0;
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .main {
@@ -58,6 +59,19 @@ html, body,
     grid-template-columns: repeat(10, 1fr);
 }
 
+.leftCell, .rightCell {
+    background-color: var(--lighter-shade);
+    margin: 2px;
+    border-radius: 2px;
+}
+
+.leftCell:hover, .rightCell:hover {
+    cursor: pointer;
+}
+
+.leftCell:active, .rightCell:active {
+    background-color: var(--lightest-shade);
+}
 
 
 .menu {

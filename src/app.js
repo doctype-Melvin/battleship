@@ -1,3 +1,6 @@
-import Gameboard from './gameboard';
+import '../style.css';
+import './DOM';
 
-Gameboard();
+const Game = require('./game');
+
+Game;

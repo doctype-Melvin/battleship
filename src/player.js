@@ -1,8 +1,17 @@
 const Gameboard = require('./gameboard');
 
-const player = (name) => ({
-  name,
+const player = (id) => ({
+  id,
   board: Gameboard(),
+  changeRotation(name) {
+    this.board.rotateShip(name);
+  },
+  setShip(name, coor) {
+    this.board.placeShip(name, coor);
+  },
+  setAttack(coor) {
+    this.board.placeAttack(coor);
+  },
   randomCoor(min = 0, max = 10) {
     const x = Math.floor(Math.random() * (max - min) + min);
     const y = Math.floor(Math.random() * (max - min) + min);
