@@ -4,6 +4,7 @@ const ship = (name, size) => ({
   rotation: 'H',
   hits: 0,
   sunk: false,
+  position: [],
   isHit() {
     this.hits += 1;
     return this.hits;

@@ -26,4 +26,9 @@ describe('Gameboard Factory Function', () => {
   it('has a method of looking up ships from the harbor array', () => {
     expect(typeof testBoard.getShip('battleship')).toEqual('object');
   });
+
+  it('has a method of creating a ship\'s path', () => {
+    const testPath = testBoard.makePath('cruiser', [0, 0]);
+    expect(testBoard.getShip('cruiser').position).toHaveLength(3);
+  });
 });

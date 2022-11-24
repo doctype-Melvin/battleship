@@ -40,9 +40,25 @@ const gameboard = () => {
   const success = [];
 
   const getShip = (shipName) => harbor.find((ship) => ship.name === shipName).type;
+
+  const makePath = (shipName, coor) => {
+    const ship = getShip(shipName);
+    const path = [];
+    for (let i = 0; i < ship.size; i += 1) {
+      if (ship.rotation !== 'H') {
+        path.push([coor[0], coor[1] - i]);
+      } else {
+        path.push([coor[0] + i, coor[1]]);
+      }
+    }
+    ship.position = path;
+    return path;
+  };
+
   return {
     createOcean,
     getShip,
+    makePath,
     harbor,
     inGame,
     occupied,
