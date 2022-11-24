@@ -9,4 +9,6 @@ const Game = () => {
   };
 };
 
-module.exports = Game;
+const gameController = Game();
+
+module.exports = gameController;

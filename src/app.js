@@ -3,4 +3,4 @@ import './DOM';
 
 const Game = require('./game');
 
-Game();
+Game;

@@ -1,4 +1,4 @@
-const Game = require('./game');
+const gameController = require('./game');
 const Gameboard = require('./gameboard');
 
 (() => {
@@ -55,8 +55,8 @@ const Gameboard = require('./gameboard');
     leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       const coor = JSON.parse(e.target.attributes[0].nodeValue);
       console.log(ship, coor);
-      Game().human.setShip(ship, coor);
-      console.log(Game().human.board.occupied);
+      gameController.human.setShip(ship, coor);
+      console.log(gameController.human.board.occupied);
     }));
   }));
 
