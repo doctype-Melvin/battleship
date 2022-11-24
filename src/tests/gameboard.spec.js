@@ -1,6 +1,7 @@
 const Gameboard = require('../gameboard');
 
 describe('controller module', () => {
+  const testBoard = Gameboard();
   it('returns an array with length of 100', () => {
     expect(Gameboard().ocean).toHaveLength(100);
   });
@@ -24,8 +25,10 @@ describe('controller module', () => {
   });
 
   it('checks for overlapping ships', () => {
+    const destroyer = testBoard.placeShip('destroyer', [1, 1]);
+    const testPath = testBoard.makePath('submarine', [0, 1]);
     expect(typeof Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual('boolean');
-    expect(Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual(false);
+    expect(testBoard.overlaps(testPath)).toEqual(true);
   });
 
   it('places attacks', () => {

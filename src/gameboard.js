@@ -31,6 +31,7 @@ const Gameboard = () => {
     }
   }
 
+  const placed = [];
   const inGame = [];
   const occupied = [];
   const tries = [];
@@ -39,6 +40,8 @@ const Gameboard = () => {
 
   const getShip = (string) => SHIPS.find((obj) => obj.name === string);
 
+  const rotateShip = (string) => getShip(string).type.rotate();
+
   const inbounds = (string, coor) => {
     const ship = getShip(string).type;
     if (ship.rotation !== 'H') {
@@ -46,6 +49,7 @@ const Gameboard = () => {
     }
     return ocean.some((element) => element.join() === [coor[0] + ship.size - 1, coor[1]].join());
   };
+
   const makePath = (string, coor) => {
     const ship = getShip(string).type;
     const path = [];
@@ -61,7 +65,7 @@ const Gameboard = () => {
     return path;
   };
 
-  const overlaps = (array) => occupied.some((element) => array.every((pos) => element.join() === pos.join()));
+  const overlaps = (array) => occupied.some((element) => array.some((pos) => element.join() === pos.join()));
 
   const placeShip = (string, coor) => {
     const ship = getShip(string).type;
@@ -73,6 +77,7 @@ const Gameboard = () => {
     ship.position = position;
     position.forEach((item) => occupied.push(item));
     inGame.push(ship.name);
+    placed.push(ship);
     return ship;
   };
 
@@ -104,12 +109,14 @@ const Gameboard = () => {
 
   return {
     SHIPS,
+    placed,
     ocean,
     inGame,
     occupied,
     tries,
     success,
     getShip,
+    rotateShip,
     inbounds,
     overlaps,
     makePath,
