@@ -4,23 +4,23 @@ const Gameboard = () => {
   const SHIPS = [
     {
       name: 'carrier',
-      type: shipMaker(5),
+      type: shipMaker('carrier', 5),
     },
     {
       name: 'battleship',
-      type: shipMaker(4),
+      type: shipMaker('battleship', 4),
     },
     {
       name: 'cruiser',
-      type: shipMaker(3),
+      type: shipMaker('cruiser', 3),
     },
     {
       name: 'submarine',
-      type: shipMaker(3),
+      type: shipMaker('submarine', 3),
     },
     {
       name: 'destroyer',
-      type: shipMaker(2),
+      type: shipMaker('destroyer', 2),
     },
   ];
   const ocean = [];
@@ -46,25 +46,32 @@ const Gameboard = () => {
     }
     return ocean.some((element) => element.join() === [coor[0] + ship.size - 1, coor[1]].join());
   };
+  const makePath = (string, coor) => {
+    const ship = getShip(string).type;
+    const path = [];
+    if (!inbounds(string, coor)) return null;
+
+    for (let i = 0; i < ship.size; i += 1) {
+      if (ship.rotation !== 'H') {
+        path.push([coor[0], coor[1] - i]);
+      }
+      path.push([coor[0] + i, coor[1]]);
+    }
+    return path;
+  };
 
   const overlaps = (array) => occupied.some((element) => array.every((pos) => element.join() === pos.join()));
 
   const placeShip = (string, coor) => {
     const ship = getShip(string).type;
-    const path = [];
-    if (inbounds(string, coor)) {
-      for (let i = 0; i < ship.size; i += 1) {
-        if (ship.rotation !== 'H') {
-          path.push([coor[0], coor[1] - i]);
-        }
-        path.push([coor[0] + i, coor[1]]);
-      }
-    }
-    if (!overlaps(path)) {
-      path.forEach((cell) => occupied.push(cell) && ship.position.push(cell));
-      inGame.push(ship);
-    }
-    return occupied;
+    let position = false;
+    position = makePath(string, coor);
+    if (!position) return null;
+    ship.position = position;
+    console.log(ship.position);
+    position.forEach((item) => occupied.push(item));
+    inGame.push(ship.name);
+    return ship;
   };
 
   const checkTries = (coor) => tries.every((element) => element.join() !== coor.join());
@@ -74,8 +81,9 @@ const Gameboard = () => {
 
   const placeAttack = (coor) => {
     let object;
-    if (checkTries(coor)) {
-      if (hitsShip(coor)) {
+    if (checkTries(coor)) { // Hadn't been attacked before
+      if (hitsShip(coor)) { // Matches ship's position
+        // Find the ship's position array
         object = SHIPS.find((ship) => ship.type.position.some((item) => item.join() === coor.join()));
         object.type.hit();
         success.push(coor);
@@ -102,6 +110,7 @@ const Gameboard = () => {
     getShip,
     inbounds,
     overlaps,
+    makePath,
     placeShip,
     checkTries,
     hitsShip,

@@ -1,4 +1,5 @@
-const ship = (size) => ({
+const ship = (name, size) => ({
+  name,
   size,
   rotation: 'H',
   sunk: false,
