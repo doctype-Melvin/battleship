@@ -19,4 +19,9 @@ describe('Player control', () => {
     testPlayer.randomShips();
     expect(testPlayer.board.inGame).toHaveLength(5);
   });
+
+  it('randomly places attacks', () => {
+    testPlayer.randomAttack();
+    expect(testPlayer.board.tries.length).toBeGreaterThan(0);
+  });
 });

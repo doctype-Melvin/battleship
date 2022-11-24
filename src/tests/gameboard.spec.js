@@ -25,30 +25,23 @@ describe('controller module', () => {
   });
 
   it('checks for overlapping ships', () => {
-    const destroyer = testBoard.placeShip('destroyer', [1, 1]);
+    testBoard.placeShip('destroyer', [1, 1]);
     const testPath = testBoard.makePath('submarine', [0, 1]);
     expect(typeof Gameboard().overlaps([[1, 1], [2, 1], [3, 1]])).toEqual('boolean');
     expect(testBoard.overlaps(testPath)).toEqual(true);
   });
 
   it('places attacks', () => {
-    const testGame = Gameboard();
-    const testShip = testGame.placeShip('battleship', [0, 0]);
-    expect(testGame.inGame).toHaveLength(1);
-    expect(testShip.position).toHaveLength(4);
-    expect(testGame.checkTries([0, 0])).toBeTruthy();
-    expect(testGame.hitsShip([0, 0])).toBeTruthy();
-    expect(testGame.placeAttack([0, 0])).toBeDefined();
-    expect(testGame.tries).toHaveLength(1);
-    expect(testGame.success).toHaveLength(1);
+    testBoard.placeShip('battleship', [0, 0]);
+    expect(testBoard.inGame).toHaveLength(2);
+    expect(testBoard.checkTries([0, 0])).toBeTruthy();
+    expect(testBoard.hitsShip([0, 0])).toBeTruthy();
+    expect(testBoard.placeAttack([0, 0])).toBeDefined();
+    expect(testBoard.tries).toHaveLength(1);
+    expect(testBoard.success).toHaveLength(1);
   });
 
-  test('places multiple ships in sequence', () => {
-    const testGame = Gameboard();
-    testGame.placeShip('cruiser', [2, 2]);
-    testGame.placeShip('carrier', [2, 3]);
-    testGame.placeShip('submarine', [1, 4]);
-    expect(testGame.inGame).toHaveLength(3);
-    expect(testGame.occupied).toHaveLength(11);
+  it('creates next attack for AI', () => {
+    expect(testBoard.nextAttack.length).toBeGreaterThan(0);
   });
 });

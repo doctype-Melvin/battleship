@@ -31,12 +31,13 @@ const Gameboard = () => {
     }
   }
 
-  const placed = [];
-  const inGame = [];
-  const occupied = [];
-  const tries = [];
-  const success = [];
-  const destroyed = [];
+  const placed = []; // Tracks ship objects
+  const inGame = []; // Tracks ship names
+  const occupied = []; // Tracks ship placements
+  const tries = []; // Tracks attack placements
+  const success = []; // Tracks successfull attacks
+  const nextAttack = []; // Enqueues next attacks
+  const destroyed = []; // Tracks destroyed ships
 
   const getShip = (string) => SHIPS.find((obj) => obj.name === string);
 
@@ -86,15 +87,34 @@ const Gameboard = () => {
   const reportLoss = (string) => `${string} has been destroyed`;
   const gameOver = () => ((inGame.length === destroyed.length));
 
+  const isInRange = (value) => ((value >= 0 && value <= 9));
+
+  const addNextMove = (arr) => {
+    if (isInRange(arr[0] + 1) && checkTries(arr[0] + 1)) {
+      nextAttack.push([arr[0] + 1, arr[1]]);
+    }
+    if (isInRange(arr[0] - 1) && checkTries(arr[0] - 1)) {
+      nextAttack.push([arr[0] - 1, arr[1]]);
+    }
+    if (isInRange(arr[1] + 1) && checkTries(arr[1] + 1)) {
+      nextAttack.push([arr[0], arr[1] + 1]);
+    }
+    if (isInRange(arr[1] - 1) && checkTries(arr[1] - 1)) {
+      nextAttack.push([arr[0], arr[1] - 1]);
+    }
+  };
+
   const placeAttack = (coor) => {
     let object;
     if (checkTries(coor)) { // Hadn't been attacked before
       if (hitsShip(coor)) { // Matches ship's position
+        addNextMove(coor);
         // Find the ship's position array
         object = SHIPS.find((ship) => ship.type.position.some((item) => item.join() === coor.join()));
         object.type.hit();
         success.push(coor);
         if (object.type.isSunk()) {
+          nextAttack.length = 0;
           destroyed.push(object);
           reportLoss(object.name);
           if (gameOver()) {
@@ -115,6 +135,7 @@ const Gameboard = () => {
     occupied,
     tries,
     success,
+    nextAttack,
     getShip,
     rotateShip,
     inbounds,

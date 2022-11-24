@@ -19,6 +19,13 @@ const player = (name) => ({
       });
     }
   },
+  randomAttack() {
+    if (this.board.nextAttack.length < 1) {
+      return this.board.placeAttack(this.randomCoor());
+    }
+    const next = this.board.nextAttack.shift();
+    return this.board.placeAttack(next);
+  },
 });
 
 module.exports = player;
