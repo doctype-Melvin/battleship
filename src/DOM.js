@@ -1,6 +1,7 @@
+const Game = require('./game');
 const Gameboard = require('./gameboard');
 
-const DOM = (() => {
+(() => {
   const elementFactory = (el, cl, ct) => {
     const element = document.createElement(el);
     element.classList.add(cl);
@@ -34,9 +35,13 @@ const DOM = (() => {
   rightGrid.forEach((cell) => cell.classList.add('rightCell'));
 
   // Add event listeners
-  leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
-    console.log(e.target);
-  }));
+  //   leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
+  //     console.log(e.target);
+  //   }));
+  // Right side EL should only activate after all ships have been placed
+  // Placing all ships triggers the cpu random placement method
+  // This starts the second phase of the game
+  // Player now makes the first move
   rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
     console.log(e.target);
   }));
@@ -46,7 +51,13 @@ const DOM = (() => {
   ships.forEach((ship) => menu.append(elementFactory('button', 'sBtn', ship.name.toUpperCase())));
   const buttons = document.querySelectorAll('.sBtn');
   buttons.forEach((btn) => btn.addEventListener('click', (e) => {
-    console.log(e.target.textContent);
+    const ship = (e.target.textContent.toLowerCase());
+    leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
+      const coor = JSON.parse(e.target.attributes[0].nodeValue);
+      console.log(ship, coor);
+      Game().human.setShip(ship, coor);
+      console.log(Game().human.board.occupied);
+    }));
   }));
 
   const rotateBtn = elementFactory('button', 'btn', 'ROTATE');

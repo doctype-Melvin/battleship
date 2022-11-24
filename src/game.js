@@ -1,8 +1,12 @@
 const player = require('./player');
 
-const Game = (() => {
+const Game = () => {
   const human = player('human');
   const roboto = player('ai');
-})();
+  return {
+    human,
+    roboto,
+  };
+};
 
 module.exports = Game;

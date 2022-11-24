@@ -73,6 +73,9 @@ html, body,
     background-color: var(--lightest-shade);
 }
 
+.leftCellPlaced {
+    background-color: var(--darker-shade);
+}
 
 .menu {
     grid-area: controls;
