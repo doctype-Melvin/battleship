@@ -9,6 +9,8 @@ const player = (name) => ({
     return [x, y];
   },
   randomShips() {
+    this.board.SHIPS[Math.floor(Math.random() * 5)].type.rotate();
+    this.board.SHIPS[Math.floor(Math.random() * 5)].type.rotate();
     while (this.board.inGame.length < this.board.SHIPS.length) {
       this.board.SHIPS.forEach((ship) => {
         if (!this.board.inGame.includes(ship.name)) {

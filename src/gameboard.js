@@ -54,8 +54,9 @@ const Gameboard = () => {
     for (let i = 0; i < ship.size; i += 1) {
       if (ship.rotation !== 'H') {
         path.push([coor[0], coor[1] - i]);
+      } else {
+        path.push([coor[0] + i, coor[1]]);
       }
-      path.push([coor[0] + i, coor[1]]);
     }
     return path;
   };
@@ -64,11 +65,12 @@ const Gameboard = () => {
 
   const placeShip = (string, coor) => {
     const ship = getShip(string).type;
+
     let position = false;
     position = makePath(string, coor);
     if (!position) return null;
+    if (overlaps(position)) return null;
     ship.position = position;
-    console.log(ship.position);
     position.forEach((item) => occupied.push(item));
     inGame.push(ship.name);
     return ship;
