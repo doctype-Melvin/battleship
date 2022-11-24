@@ -51,9 +51,11 @@ const gameboard = () => {
         path.push([coor[0] + i, coor[1]]);
       }
     }
-    ship.position = path;
     return path;
   };
+
+  // Place ship function will call several helper/test functions
+  // If test functions succeed the ship can be placed
 
   return {
     createOcean,

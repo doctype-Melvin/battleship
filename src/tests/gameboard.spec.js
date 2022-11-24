@@ -27,8 +27,16 @@ describe('Gameboard Factory Function', () => {
     expect(typeof testBoard.getShip('battleship')).toEqual('object');
   });
 
+  it.todo('has a method of checking inbounds placement');
+
   it('has a method of creating a ship\'s path', () => {
     const testPath = testBoard.makePath('cruiser', [0, 0]);
-    expect(testBoard.getShip('cruiser').position).toHaveLength(3);
+    expect(testPath).toHaveLength(3);
   });
+
+  it.todo('has a method of checking overlapping paths');
+
+  it.todo('handles illegal placements');
+
+  it.todo('places ships by population the ship\'s position array and the occupied array');
 });
