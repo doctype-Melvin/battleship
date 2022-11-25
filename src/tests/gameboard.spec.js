@@ -7,9 +7,8 @@ describe('Gameboard Factory Function', () => {
   });
 
   it('has a method of creating an array of length 100', () => {
-    const testOcean = testBoard.createOcean();
-    expect(testOcean).toHaveLength(100);
-    expect(Array.isArray(testOcean)).toEqual(true);
+    expect(testBoard.ocean).toHaveLength(100);
+    expect(Array.isArray(testBoard.ocean)).toEqual(true);
   });
 
   it('has an array that stores the 5 ship types', () => {
@@ -27,16 +26,36 @@ describe('Gameboard Factory Function', () => {
     expect(typeof testBoard.getShip('battleship')).toEqual('object');
   });
 
-  it.todo('has a method of checking inbounds placement');
+  it('has a method of checking inbounds placement', () => {
+    const vertShip = testBoard.getShip('carrier').rotate();
+    expect(testBoard.isInbounds(testBoard.getShip('battleship'), [0, 0])).toEqual(true);
+    expect(testBoard.isInbounds(testBoard.getShip('carrier'), [0, 2])).toEqual(false);
+  });
 
   it('has a method of creating a ship\'s path', () => {
-    const testPath = testBoard.makePath('cruiser', [0, 0]);
+    const testPath = testBoard.makePath(testBoard.getShip('cruiser'), [2, 2]);
+    testPath.forEach((pos) => testBoard.occupied.push(pos));
     expect(testPath).toHaveLength(3);
   });
 
-  it.todo('has a method of checking overlapping paths');
+  it('has a method of checking overlapping paths', () => {
+    const vertShip = testBoard.getShip('submarine');
+    vertShip.rotate();
+    const vertPos = testBoard.makePath(vertShip, [3, 3]);
+    expect(testBoard.isOverlay(vertPos)).toEqual(true);
+    vertPos.forEach((pos) => testBoard.occupied.push(pos));
+    expect(testBoard.occupied).toHaveLength(6);
+  });
 
   it.todo('handles illegal placements');
 
-  it.todo('places ships by population the ship\'s position array and the occupied array');
+  it('places ships by populating the ship\'s position array and the occupied array', () => {
+    const testPlacement = testBoard.placeShip('destroyer', [0, 0]);
+    expect(testPlacement).toBeDefined();
+    expect(testBoard.occupied).toHaveLength(8);
+    const secondPlacement = testBoard.placeShip('carrier', [0, 0]);
+    expect(typeof secondPlacement).toEqual('string');
+    expect(secondPlacement).toEqual('path is blocked by another ship');
+    expect(testBoard.occupied).toHaveLength(8);
+  });
 });
