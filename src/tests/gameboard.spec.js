@@ -69,7 +69,19 @@ describe('Gameboard Factory Function', () => {
     expect(testBoard2.inGame.some((item) => item.rotation === 'V')).toEqual(true);
   });
 
-  it('tracks attacks', () => {
+  it('places and tracks attacks', () => {
     expect(testBoard.placeAttack([1, 1])).toBeDefined();
+    expect(testBoard.placeAttack([0, 0])).toHaveLength(2);
+    expect(testBoard.bombed.length).toBeGreaterThan(1);
+  });
+
+  it('places random attacks', () => {
+    const testBoard2 = gameboard();
+    const tester = testBoard2.placeShip('destroyer', [0, 5]);
+    expect(testBoard.inGame).toHaveLength(1);
+    testBoard2.placeAttack([1, 5]);
+    testBoard2.randomAttack();
+    testBoard2.randomAttack();
+    expect(testBoard2.bombed).toHaveLength(3);
   });
 });

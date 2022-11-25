@@ -100,16 +100,16 @@ const gameboard = () => {
     return ship;
   };
 
-  const randomShips = () => {
-    const randomCoor = () => { // Creates random coor
-      const randomNum = (min = 0, max = 10) => Math.floor(Math.random() * (max - min) + min);
-      let x; const // Weird way of doing that
-        y = randomNum();
-      return [x, y];
-    };
+  const randomCoor = () => { // Creates random coor
+    const randomNum = (min = 0, max = 10) => Math.floor(Math.random() * (max - min) + min);
+    const x = randomNum();
+    const y = randomNum();
+    return [x, y];
+  };
 
+  const randomShips = () => {
     while (inGame.length < harbor.length) {
-      harbor[Math.floor(Math.random() * 5)].type.rotate(); // Rotate a random ship
+      harbor[Math.floor(Math.random() * harbor.length)].type.rotate(); // Rotate a random ship
       if (inGame.length > 1) {
         harbor.forEach((ship) => { // Avoid duplicating ship types
           if (inGame.every((item) => item.name !== ship.name)) {
@@ -124,15 +124,33 @@ const gameboard = () => {
     return inGame;
   };
 
+  const checkValidShot = (target) => bombed.every((pos) => pos.join() !== target.join());
+
+  const nextAttack = () => {
+    const first = success.shift(); // Takes the first coordinate ...
+    const makeQ = () => {
+      while (success.length < 4) { // ... and creates the next moves
+        success.push([first[0], first[1] + 1]); // up
+        success.push([first[0], first[1] - 1]); // down
+        success.push([first[0] + 1, first[1]]); // right
+        success.push([first[0] - 1, first[1]]); // left
+      }
+      const onBoard = success.filter((item) => item.every((value) => value >= 0 && value < 10));
+      return onBoard.filter((item) => checkValidShot(item) === true);
+      // Filter only valid moves
+    };
+    return makeQ();
+  };
+
   const checkTarget = (coor) => {
     inGame.forEach((ship) => { // Checks if coor matches ship position
       if (ship.position.some((pos) => pos.join() === coor.join())) { // Succsessful attack
         ship.isHit();
-        console.log('Success');
         success.push(coor);
-      } else {
-        console.log('Water'); // Missed target
+        nextAttack(); // Succsessful attacks create a queue for next attacks
+        return true;
       }
+      return false;
     });
     bombed.push(coor);
   };
@@ -140,12 +158,29 @@ const gameboard = () => {
   const placeAttack = (coor) => {
     if (bombed.length < 1) { // No attacks yet
       checkTarget(coor); // Check for attack success
-    } else if (bombed.every((pos) => pos.join() !== coor.join())) { // Cell hasn't been attacked
+    } else if (checkValidShot(coor)) { // Cell hasn't been attacked
       checkTarget(coor); // Check for attack succes
     } else {
-      return illegalHandler(1); // Cell has been attacked
+      return illegalHandler(1); // Cell has been attacked before
     }
     return bombed;
+  };
+
+  const randomAttack = () => {
+    let target = randomCoor();
+    if (success.length > 1) {
+      placeAttack(success.shift());
+    } else if (checkValidShot(target)) {
+      placeAttack(target);
+    } else {
+      while (!checkValidShot(target)) {
+        target = randomCoor();
+        if (checkValidShot(target)) {
+          placeAttack(target);
+        }
+      }
+    }
+    return success;
   };
 
   return {
@@ -157,6 +192,7 @@ const gameboard = () => {
     placeShip,
     randomShips,
     placeAttack,
+    randomAttack,
     ocean,
     harbor,
     inGame,
