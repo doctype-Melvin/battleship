@@ -68,4 +68,8 @@ describe('Gameboard Factory Function', () => {
     expect(testBoard2.occupied).toHaveLength(17);
     expect(testBoard2.inGame.some((item) => item.rotation === 'V')).toEqual(true);
   });
+
+  it('tracks attacks', () => {
+    expect(testBoard.placeAttack([1, 1])).toBeDefined();
+  });
 });

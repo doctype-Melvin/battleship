@@ -44,12 +44,12 @@ const gameboard = () => {
   const getShip = (shipName) => harbor.find((ship) => ship.name === shipName).type;
 
   const isInbounds = (ship, coor) => {
-    const lastCell = () => {
+    const lastCell = () => { // Create last position coor
       let tail;
       if (ship.rotation !== 'H') {
-        tail = [coor[0], coor[1] - ship.size + 1];
+        tail = [coor[0], coor[1] - ship.size + 1]; // Go down y axis
       } else {
-        tail = [coor[0] + ship.size - 1, coor[1]];
+        tail = [coor[0] + ship.size - 1, coor[1]]; // Go down x axis
       }
       return tail;
     };
@@ -70,7 +70,7 @@ const gameboard = () => {
   };
 
   const isOverlay = (array) => {
-    const toString = (arr) => arr.map((item) => item.join());
+    const toString = (arr) => arr.map((item) => item.join()); // Function returns array as string
     const toStringOcc = toString(occupied);
     const toStringPath = toString(array);
     return toStringOcc.some((el) => toStringPath.some((item) => el === item));
@@ -78,51 +78,74 @@ const gameboard = () => {
 
   const illegalHandler = (value) => {
     if (value === 1) {
-      console.log('Ship is out of bounds');
       return 'out of bounds';
     }
-    console.log('Ship overlays');
     return 'path is blocked by another ship';
   };
 
   const placeShip = (shipName, coor) => {
     const ship = getShip(shipName);
-    if (!isInbounds) return illegalHandler(1);
+    if (!isInbounds) return illegalHandler(1); // Returns for out of bounds placement
     const shipPath = makePath(ship, coor);
-    if (occupied.length < 1) {
-      ship.position = shipPath;
-      shipPath.forEach((pos) => occupied.push(pos));
-    } else if (!isOverlay(shipPath)) {
+    if (occupied.length < 1) { // No ship has been placed yet
+      ship.position = shipPath; // Set ship position
+      shipPath.forEach((pos) => occupied.push(pos)); // Populate occupied array
+    } else if (!isOverlay(shipPath)) { // Check if ships overlay
       ship.position = shipPath;
       shipPath.forEach((pos) => occupied.push(pos));
     } else {
-      return illegalHandler(2);
+      return illegalHandler(2); // Returns if ships overlay
     }
     inGame.push(ship);
     return ship;
   };
 
   const randomShips = () => {
-    const randomCoor = () => {
+    const randomCoor = () => { // Creates random coor
       const randomNum = (min = 0, max = 10) => Math.floor(Math.random() * (max - min) + min);
-      const x = randomNum();
-      const y = randomNum();
+      let x; const // Weird way of doing that
+        y = randomNum();
       return [x, y];
     };
+
     while (inGame.length < harbor.length) {
-      harbor[Math.floor(Math.random() * 5)].type.rotate();
+      harbor[Math.floor(Math.random() * 5)].type.rotate(); // Rotate a random ship
       if (inGame.length > 1) {
-        harbor.forEach((ship) => {
+        harbor.forEach((ship) => { // Avoid duplicating ship types
           if (inGame.every((item) => item.name !== ship.name)) {
             placeShip(ship.name, randomCoor());
           }
         });
       } else {
-        harbor.forEach((ship) => placeShip(ship.name, randomCoor()));
+        harbor.forEach((ship) => placeShip(ship.name, randomCoor())); // Places the first ship
       }
     }
 
     return inGame;
+  };
+
+  const checkTarget = (coor) => {
+    inGame.forEach((ship) => { // Checks if coor matches ship position
+      if (ship.position.some((pos) => pos.join() === coor.join())) { // Succsessful attack
+        ship.isHit();
+        console.log('Success');
+        success.push(coor);
+      } else {
+        console.log('Water'); // Missed target
+      }
+    });
+    bombed.push(coor);
+  };
+
+  const placeAttack = (coor) => {
+    if (bombed.length < 1) { // No attacks yet
+      checkTarget(coor); // Check for attack success
+    } else if (bombed.every((pos) => pos.join() !== coor.join())) { // Cell hasn't been attacked
+      checkTarget(coor); // Check for attack succes
+    } else {
+      return illegalHandler(1); // Cell has been attacked
+    }
+    return bombed;
   };
 
   return {
@@ -133,6 +156,7 @@ const gameboard = () => {
     isOverlay,
     placeShip,
     randomShips,
+    placeAttack,
     ocean,
     harbor,
     inGame,
