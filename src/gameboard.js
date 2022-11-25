@@ -73,8 +73,7 @@ const gameboard = () => {
     const toString = (arr) => arr.map((item) => item.join());
     const toStringOcc = toString(occupied);
     const toStringPath = toString(array);
-    const hasDupes = () => toStringOcc.some((el) => toStringPath.some((item) => el === item));
-    return hasDupes();
+    return toStringOcc.some((el) => toStringPath.some((item) => el === item));
   };
 
   const illegalHandler = (value) => {
@@ -99,11 +98,32 @@ const gameboard = () => {
     } else {
       return illegalHandler(2);
     }
-    return shipPath;
+    inGame.push(ship);
+    return ship;
   };
-  // Place ship function will call several helper/test functions
-  // If test functions succeed the ship can be placed
-  // Else there is a method of handling illegal placements
+
+  const randomShips = () => {
+    const randomCoor = () => {
+      const randomNum = (min = 0, max = 10) => Math.floor(Math.random() * (max - min) + min);
+      const x = randomNum();
+      const y = randomNum();
+      return [x, y];
+    };
+    while (inGame.length < harbor.length) {
+      harbor[Math.floor(Math.random() * 5)].type.rotate();
+      if (inGame.length > 1) {
+        harbor.forEach((ship) => {
+          if (inGame.every((item) => item.name !== ship.name)) {
+            placeShip(ship.name, randomCoor());
+          }
+        });
+      } else {
+        harbor.forEach((ship) => placeShip(ship.name, randomCoor()));
+      }
+    }
+
+    return inGame;
+  };
 
   return {
     createOcean,
@@ -112,6 +132,7 @@ const gameboard = () => {
     makePath,
     isOverlay,
     placeShip,
+    randomShips,
     ocean,
     harbor,
     inGame,

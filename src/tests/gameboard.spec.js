@@ -57,5 +57,15 @@ describe('Gameboard Factory Function', () => {
     expect(typeof secondPlacement).toEqual('string');
     expect(secondPlacement).toEqual('path is blocked by another ship');
     expect(testBoard.occupied).toHaveLength(8);
+    expect(testBoard.inGame).toHaveLength(1);
+  });
+
+  it('places ships randomly', () => {
+    const testBoard2 = gameboard();
+    const random = testBoard2.randomShips();
+    expect(random).toBeDefined();
+    expect(testBoard2.inGame).toHaveLength(5);
+    expect(testBoard2.occupied).toHaveLength(17);
+    expect(testBoard2.inGame.some((item) => item.rotation === 'V')).toEqual(true);
   });
 });
