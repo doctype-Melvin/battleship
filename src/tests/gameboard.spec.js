@@ -27,7 +27,7 @@ describe('Gameboard Factory Function', () => {
   });
 
   it('has a method of checking inbounds placement', () => {
-    const vertShip = testBoard.getShip('carrier').rotate();
+    testBoard.getShip('carrier').rotate();
     expect(testBoard.isInbounds(testBoard.getShip('battleship'), [0, 0])).toEqual(true);
     expect(testBoard.isInbounds(testBoard.getShip('carrier'), [0, 2])).toEqual(false);
   });
@@ -75,13 +75,15 @@ describe('Gameboard Factory Function', () => {
     expect(testBoard.bombed.length).toBeGreaterThan(1);
   });
 
-  it('places random attacks', () => {
+  it('places random attacks and creates queue for next attack after shot on target', () => {
     const testBoard2 = gameboard();
     const tester = testBoard2.placeShip('destroyer', [0, 5]);
     expect(testBoard.inGame).toHaveLength(1);
-    testBoard2.placeAttack([1, 5]);
-    testBoard2.randomAttack();
+    testBoard2.placeAttack([1, 5]); // On target
+    testBoard2.randomAttack(); // From queue
     testBoard2.randomAttack();
     expect(testBoard2.bombed).toHaveLength(3);
+    expect(testBoard2.success).toHaveLength(2);
+    expect(tester.hits).toEqual(1);
   });
 });

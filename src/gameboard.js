@@ -135,9 +135,10 @@ const gameboard = () => {
         success.push([first[0] + 1, first[1]]); // right
         success.push([first[0] - 1, first[1]]); // left
       }
+      // coordinates must be valid positions
       const onBoard = success.filter((item) => item.every((value) => value >= 0 && value < 10));
+      // filter all unattacked positions
       return onBoard.filter((item) => checkValidShot(item) === true);
-      // Filter only valid moves
     };
     return makeQ();
   };
@@ -148,9 +149,7 @@ const gameboard = () => {
         ship.isHit();
         success.push(coor);
         nextAttack(); // Succsessful attacks create a queue for next attacks
-        return true;
       }
-      return false;
     });
     bombed.push(coor);
   };
