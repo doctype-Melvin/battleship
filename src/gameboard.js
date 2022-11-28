@@ -143,13 +143,17 @@ const gameboard = () => {
     return makeQ();
   };
 
+  const isGameOver = () => harbor.every((ship) => ship.type.isSunk());
+
   const checkTarget = (coor) => {
     inGame.forEach((ship) => { // Checks if coor matches ship position
       if (ship.position.some((pos) => pos.join() === coor.join())) { // Succsessful attack
         ship.isHit();
         success.push(coor);
         nextAttack(); // Succsessful attacks create a queue for next attacks
+        return isGameOver();
       }
+      return null;
     });
     bombed.push(coor);
   };
