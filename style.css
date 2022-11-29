@@ -8,6 +8,7 @@
     --darkest-shade: #4F3130;
     --lighter-shade: #D8BD8A;
     --lightest-shade: #D8D78F;
+    --white: #FFF;
 }
 
 html, body,
@@ -93,6 +94,25 @@ html, body,
     background-color: var(--lightest-shade);
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+.shipBtn, .reset {
+    background-color: var(--main-color);
+    color: var(--white);
+    font-weight: 600;
+    border-radius: 5px;
+    width: 66%;
+    border: none;
+    padding: 5px 0;
+}
+
+.shipBtn:hover, .reset:hover {
+    cursor: pointer;
+    background-color: var(--darkest-shade);
+}
+
+.shipBtn:active, .reset:active {
+    background-color: var(--lightest-shade);
 }
 
 .harbor {

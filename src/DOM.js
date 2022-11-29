@@ -19,7 +19,7 @@ const input = () => {
   const robotoGrid = document.querySelectorAll('.attacks');
   const shipGrid = gridFactory('ships', leftGrid);
   const playerGrid = document.querySelectorAll('.ships');
-
+  // Menu section start
   const menu = document.querySelector('.menu');
   menu.append(elementMaker('div', 'score', 'The scoreboard'));
   menu.append(elementMaker('div', 'info', 'The message info'));
@@ -30,6 +30,7 @@ const input = () => {
   shipBtns.forEach((btn) => btn.addEventListener('click', (e) => {
     console.log(e.target.textContent);
   }));
+  // Menu section end
 
   return {
     shipGrid,
