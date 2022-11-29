@@ -32,44 +32,44 @@ html, body,
     grid-area: header;
 }
 
-#left, #right {
+#ships, #attacks {
     height: 100%;
     direction: rtl;
 }
 
-.gameboard > .cell {
+.gameboard > .ships {
     direction: ltr;
 }
 
-.gameboard, .gameboard > .cell {
+.gameboard, .gameboard > .ships {
     transform: rotate(180deg);
 }
 
-#left {
+#ships {
     grid-area: leftBoard;
 }
 
-#right {
+#attacks {
     grid-area: rightBoard;
 }
 
-#left, #right {
+#ships, #attacks {
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: repeat(10, 1fr);
 }
 
-.leftCell, .rightCell {
+.ships, .attacks {
     background-color: var(--lighter-shade);
     margin: 2px;
     border-radius: 2px;
 }
 
-.leftCell:hover, .rightCell:hover {
+.ships:hover, .attacks:hover {
     cursor: pointer;
 }
 
-.leftCell:active, .rightCell:active {
+.ships:active, .attacks:active {
     background-color: var(--lightest-shade);
 }
 

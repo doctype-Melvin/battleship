@@ -1,16 +1,18 @@
 const gameboard = require('./gameboard');
 
 const player = (id, opp) => {
-  const turn = false;
+  let turn = false;
   const board = gameboard();
-  // Needs method to switch turns after attack
-  const fire = (coor, opp) => {
+
+  const fire = (coor) => {
     opp.board.placeAttack(coor);
     opp.turn = true;
+    turn = false;
   };
   const cpuFire = (opp) => {
     opp.board.randomAttack();
     opp.turn = true;
+    turn = false;
   };
   return {
     id,
