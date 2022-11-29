@@ -35,17 +35,27 @@ const input = () => {
 
   // EventListeners section start
   let shipChoice = null;
+  let coor = null;
+  let ship = null;
   const setShipName = (value) => {
     shipChoice = value;
     return shipChoice;
   };
   const getShipName = () => shipChoice;
-  const activateShip = (player) => {
-    playerGrid.forEach((cell) => cell.addEventListener('click', (e) => {
-      const coor = JSON.parse(e.target.attributes[1].value);
-      const ship = getShipName();
-      player.setShip(ship, coor);
-    }));
+
+  const activate = (e, ply) => {
+    coor = JSON.parse(e.target.attributes[1].value);
+    ship = getShipName();
+    console.log(ship, coor);
+    ply.setShip(ship, coor);
+  };
+
+  const activateShip = (ply) => {
+    playerGrid.forEach((cell) => cell.addEventListener('click', (e) => activate(e, ply)));
+  };
+
+  const deactivateShip = (ply) => {
+    playerGrid.forEach((cell) => cell.removeEventListener('click', (e) => activate(e, ply)));
   };
 
   const shipBtns = document.querySelectorAll('.shipBtn');
@@ -61,6 +71,7 @@ const input = () => {
     attacksGrid,
     robotoGrid,
     activateShip,
+    deactivateShip,
   };
 };
 

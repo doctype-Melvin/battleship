@@ -3,8 +3,8 @@ const shipMaker = require('./ship');
 const gameboard = () => {
   const createOcean = () => {
     const grid = [];
-    for (let x = 0; x < 10; x += 1) {
-      for (let y = 0; y < 10; y += 1) {
+    for (let y = 0; y < 10; y += 1) {
+      for (let x = 0; x < 10; x += 1) {
         grid.push([x, y]);
       }
     }
@@ -89,6 +89,7 @@ const gameboard = () => {
     if (!isInbounds) return illegalHandler(1); // Returns due to out of bounds placement
     const shipPath = makePath(ship, coor);
     if (occupied.length < 1) { // No ship has been placed yet
+      console.log('setting');
       ship.position = shipPath; // Set ship position
       shipPath.forEach((pos) => occupied.push(pos)); // Populate occupied array
     } else if (!isOverlay(shipPath)) { // Check if ships overlay
@@ -98,6 +99,7 @@ const gameboard = () => {
       return illegalHandler(2); // Returns due to ships overlaying
     }
     inGame.push(ship);
+    console.log(ship);
     return ship;
   };
 

@@ -4,11 +4,11 @@ const input = require('./DOM');
 const controller = () => {
   const human = player('human', 'roboto');
   const roboto = player('roboto', 'human');
-
+  const DOM = input();
   // First phase of game: Place ships
-  if (roboto.board.inGame < 5) {
-    roboto.board.randomShips();
-    input().activateShip(human);
+  if (human.board.inGame.length < 5) {
+    DOM.activateShip(human);
+    console.log(human.board.inGame.length);
   }
   return {
     human,
