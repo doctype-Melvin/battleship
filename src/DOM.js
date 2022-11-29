@@ -24,6 +24,12 @@ const input = () => {
   menu.append(elementMaker('div', 'score', 'The scoreboard'));
   menu.append(elementMaker('div', 'info', 'The message info'));
   gameboard().harbor.forEach((ship) => menu.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase())));
+  menu.append(elementMaker('button', 'reset', 'RESET'));
+
+  const shipBtns = document.querySelectorAll('.shipBtn');
+  shipBtns.forEach((btn) => btn.addEventListener('click', (e) => {
+    console.log(e.target.textContent);
+  }));
 
   return {
     shipGrid,
