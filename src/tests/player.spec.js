@@ -14,7 +14,9 @@ describe('Player Object', () => {
     roboto.board.randomShips();
     expect(roboto.board.inGame).toHaveLength(5);
     expect(roboto.board.bombed).toHaveLength(0);
-    human.fire([3, 3], roboto);
+    human.cpuFire(roboto);
+    expect(roboto.turn).toEqual(true);
+    expect(human.turn).toEqual(false);
     expect(roboto.board.bombed.length).toBeGreaterThan(0);
     expect(human.board.bombed).toHaveLength(0);
     roboto.cpuFire(human);

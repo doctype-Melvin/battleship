@@ -37,6 +37,7 @@ const gameboard = () => {
   ];
 
   const inGame = [];
+  const destroyed = [];
   const occupied = [];
   const bombed = [];
   const success = [];
@@ -49,7 +50,7 @@ const gameboard = () => {
       if (ship.rotation !== 'H') {
         tail = [coor[0], coor[1] - ship.size + 1]; // Go down y axis
       } else {
-        tail = [coor[0] + ship.size - 1, coor[1]]; // Go down x axis
+        tail = [coor[0] + ship.size - 1, coor[1]]; // Go up x axis
       }
       return tail;
     };
@@ -69,7 +70,7 @@ const gameboard = () => {
     return path;
   };
 
-  const isOverlay = (array) => {
+  const isOverlay = (array) => { // Fn checks the ship's path / position array
     const toString = (arr) => arr.map((item) => item.join()); // Function returns array as string
     const toStringOcc = toString(occupied);
     const toStringPath = toString(array);
@@ -85,7 +86,7 @@ const gameboard = () => {
 
   const placeShip = (shipName, coor) => {
     const ship = getShip(shipName);
-    if (!isInbounds) return illegalHandler(1); // Returns for out of bounds placement
+    if (!isInbounds) return illegalHandler(1); // Returns due to out of bounds placement
     const shipPath = makePath(ship, coor);
     if (occupied.length < 1) { // No ship has been placed yet
       ship.position = shipPath; // Set ship position
@@ -94,7 +95,7 @@ const gameboard = () => {
       ship.position = shipPath;
       shipPath.forEach((pos) => occupied.push(pos));
     } else {
-      return illegalHandler(2); // Returns if ships overlay
+      return illegalHandler(2); // Returns due to ships overlaying
     }
     inGame.push(ship);
     return ship;
@@ -126,7 +127,7 @@ const gameboard = () => {
 
   const checkValidShot = (target) => bombed.every((pos) => pos.join() !== target.join());
 
-  const nextAttack = () => {
+  const nextAttack = () => { // Creates a queue after successful attack
     const first = success.shift(); // Takes the first coordinate ...
     const makeQ = () => {
       while (success.length < 4) { // ... and creates the next moves
@@ -143,7 +144,7 @@ const gameboard = () => {
     return makeQ();
   };
 
-  const isGameOver = () => harbor.every((ship) => ship.type.isSunk());
+  const isGameOver = () => ((destroyed.length === 5));
 
   const checkTarget = (coor) => {
     inGame.forEach((ship) => { // Checks if coor matches ship position
@@ -151,9 +152,10 @@ const gameboard = () => {
         ship.isHit();
         success.push(coor);
         nextAttack(); // Succsessful attacks create a queue for next attacks
-        return isGameOver();
+        if (ship.isSunk()) destroyed.push(ship);
+        return true;
       }
-      return null;
+      return false;
     });
     bombed.push(coor);
   };
@@ -196,6 +198,7 @@ const gameboard = () => {
     randomShips,
     placeAttack,
     randomAttack,
+    isGameOver,
     ocean,
     harbor,
     inGame,
