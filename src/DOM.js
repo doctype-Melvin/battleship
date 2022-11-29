@@ -1,5 +1,6 @@
 const gameboard = require('./gameboard');
 const player = require('./player');
+const elementMaker = require('./helper');
 
 const input = () => {
   const leftGrid = document.getElementById('ships');
@@ -18,6 +19,11 @@ const input = () => {
   const robotoGrid = document.querySelectorAll('.attacks');
   const shipGrid = gridFactory('ships', leftGrid);
   const playerGrid = document.querySelectorAll('.ships');
+
+  const menu = document.querySelector('.menu');
+  menu.append(elementMaker('div', 'score', 'The scoreboard'));
+  menu.append(elementMaker('div', 'info', 'The message info'));
+  gameboard().harbor.forEach((ship) => menu.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase())));
 
   return {
     shipGrid,
