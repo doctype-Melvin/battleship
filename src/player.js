@@ -4,6 +4,10 @@ const player = (id, opp) => {
   let turn = false;
   const board = gameboard();
 
+  const setShip = (ship, coor) => {
+    board.placeShip(ship, coor);
+    console.log(board.inGame);
+  };
   const fire = (coor) => {
     opp.board.placeAttack(coor);
     opp.turn = true;
@@ -19,6 +23,7 @@ const player = (id, opp) => {
     opp,
     turn,
     board,
+    setShip,
     fire,
     cpuFire,
   };

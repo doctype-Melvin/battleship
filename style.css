@@ -96,7 +96,7 @@ html, body,
     border-radius: 5px;
 }
 
-.shipBtn, .reset {
+.shipBtn, .reset, .rotate {
     background-color: var(--main-color);
     color: var(--white);
     font-weight: 600;
@@ -106,12 +106,12 @@ html, body,
     padding: 5px 0;
 }
 
-.shipBtn:hover, .reset:hover {
+.shipBtn:hover, .reset:hover, .rotate:hover {
     cursor: pointer;
     background-color: var(--darkest-shade);
 }
 
-.shipBtn:active, .reset:active {
+.shipBtn:active, .reset:active, .rotate:active {
     background-color: var(--lightest-shade);
 }
 

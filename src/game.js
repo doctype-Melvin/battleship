@@ -8,6 +8,7 @@ const controller = () => {
   // First phase of game: Place ships
   if (roboto.board.inGame < 5) {
     roboto.board.randomShips();
+    input().activateShip(human);
   }
   return {
     human,
