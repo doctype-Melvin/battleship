@@ -6,10 +6,7 @@ const controller = () => {
   const roboto = player('roboto', 'human');
   const DOM = input();
   // First phase of game: Place ships
-  if (human.board.inGame.length < 5) {
-    DOM.activateShip(human);
-    console.log(human.board.inGame.length);
-  }
+  DOM.placeChoice(human);
   return {
     human,
     roboto,

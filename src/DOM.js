@@ -27,7 +27,7 @@ const input = () => {
   const menu = document.querySelector('.menu');
   menu.append(elementMaker('div', 'score', 'The scoreboard'));
   menu.append(elementMaker('div', 'info', 'The message info'));
-  gameboard().harbor.forEach((ship) => menu.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase())));
+  gameboard().harbor.forEach((ship) => menu.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase(), ship.name)));
   menu.append(elementMaker('button', 'rotate', 'ROTATE'));
   menu.append(elementMaker('button', 'reset', 'RESET'));
 
@@ -43,26 +43,22 @@ const input = () => {
   };
   const getShipName = () => shipChoice;
 
-  const activate = (e, ply) => {
-    coor = JSON.parse(e.target.attributes[1].value);
-    ship = getShipName();
-    console.log(ship, coor);
-    ply.setShip(ship, coor);
+  const placeChoice = (ply) => {
+    let button;
+    const allBtns = document.querySelectorAll('.shipBtn');
+    allBtns.forEach((btn) => btn.addEventListener('click', (e) => {
+      button = e.target;
+      setShipName(e.target.id);
+    }));
+    const allCells = document.querySelectorAll('.ships');
+    allCells.forEach((cell) => cell.addEventListener('click', (e) => {
+      ship = getShipName();
+      coor = JSON.parse(e.target.attributes[1].value);
+      button.disabled = true;
+      ply.setShip(ship, coor);
+      console.log(ply.board.inGame);
+    }));
   };
-
-  const activateShip = (ply) => {
-    playerGrid.forEach((cell) => cell.addEventListener('click', (e) => activate(e, ply)));
-  };
-
-  const deactivateShip = (ply) => {
-    playerGrid.forEach((cell) => cell.removeEventListener('click', (e) => activate(e, ply)));
-  };
-
-  const shipBtns = document.querySelectorAll('.shipBtn');
-  shipBtns.forEach((btn) => btn.addEventListener('click', (e) => {
-    const shipName = e.target.textContent.toLowerCase();
-    setShipName(shipName);
-  }));
   // EventListeners section end
 
   return {
@@ -70,8 +66,7 @@ const input = () => {
     playerGrid,
     attacksGrid,
     robotoGrid,
-    activateShip,
-    deactivateShip,
+    placeChoice,
   };
 };
 

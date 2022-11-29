@@ -44,7 +44,8 @@ const gameboard = () => {
 
   const getShip = (shipName) => harbor.find((ship) => ship.name === shipName).type;
 
-  const isInbounds = (ship, coor) => {
+  const isInbounds = (shipName, coor) => {
+    const ship = getShip(shipName);
     const lastCell = () => { // Create last position coor
       let tail;
       if (ship.rotation !== 'H') {
@@ -86,10 +87,9 @@ const gameboard = () => {
 
   const placeShip = (shipName, coor) => {
     const ship = getShip(shipName);
-    if (!isInbounds) return illegalHandler(1); // Returns due to out of bounds placement
+    if (!isInbounds(shipName, coor)) return illegalHandler(1); // Returns due to out of bounds placement
     const shipPath = makePath(ship, coor);
     if (occupied.length < 1) { // No ship has been placed yet
-      console.log('setting');
       ship.position = shipPath; // Set ship position
       shipPath.forEach((pos) => occupied.push(pos)); // Populate occupied array
     } else if (!isOverlay(shipPath)) { // Check if ships overlay
@@ -98,8 +98,8 @@ const gameboard = () => {
     } else {
       return illegalHandler(2); // Returns due to ships overlaying
     }
+    // console.log(inGame);
     inGame.push(ship);
-    console.log(ship);
     return ship;
   };
 

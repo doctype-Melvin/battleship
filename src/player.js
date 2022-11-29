@@ -6,7 +6,6 @@ const player = (id, opp) => {
 
   const setShip = (ship, coor) => {
     board.placeShip(ship, coor);
-    console.log(board.inGame);
   };
   const fire = (coor) => {
     opp.board.placeAttack(coor);
