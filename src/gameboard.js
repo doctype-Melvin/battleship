@@ -87,7 +87,8 @@ const gameboard = () => {
 
   const placeShip = (shipName, coor) => {
     const ship = getShip(shipName);
-    if (!isInbounds(shipName, coor)) return illegalHandler(1); // Returns due to out of bounds placement
+    // Returns due to out of bounds placement
+    if (!isInbounds(shipName, coor)) return illegalHandler(1);
     const shipPath = makePath(ship, coor);
     if (occupied.length < 1) { // No ship has been placed yet
       ship.position = shipPath; // Set ship position
