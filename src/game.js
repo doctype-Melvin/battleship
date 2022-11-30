@@ -7,6 +7,9 @@ const controller = () => {
   const DOM = input();
   // First phase of game: Place ships
   DOM.placeChoice(human);
+  roboto.board.randomShips();
+  console.log(roboto.board.inGame);
+  DOM.fireAttack(roboto);
   return {
     human,
     roboto,

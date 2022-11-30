@@ -37,28 +37,40 @@ const input = () => {
   let shipChoice = null;
   let coor = null;
   let ship = null;
+
   const setShipName = (value) => {
     shipChoice = value;
     return shipChoice;
   };
   const getShipName = () => shipChoice;
 
-  const placeChoice = (ply) => {
-    let button;
-    const allBtns = document.querySelectorAll('.shipBtn');
-    allBtns.forEach((btn) => btn.addEventListener('click', (e) => {
-      button = e.target;
-      setShipName(e.target.id);
-    }));
-    const allCells = document.querySelectorAll('.ships');
-    allCells.forEach((cell) => cell.addEventListener('click', (e) => {
-      ship = getShipName();
-      coor = JSON.parse(e.target.attributes[1].value);
-      button.disabled = true;
-      ply.setShip(ship, coor);
-      console.log(ply.board.inGame);
-    }));
+  const btnClick = (e) => setShipName(e.target.id);
+
+  const cellClick = (e, ply) => {
+    ship = getShipName();
+    coor = JSON.parse(e.target.attributes[1].value);
+    ply.setShip(ship, coor);
+    console.log(ply.board.occupied);
   };
+
+  const placeChoice = (ply) => {
+    const allBtns = document.querySelectorAll('.shipBtn');
+    allBtns.forEach((btn) => btn.addEventListener('click', btnClick));
+    const allCells = document.querySelectorAll('.ships');
+    allCells.forEach((cell) => cell.addEventListener('click', (e) => cellClick(e, ply)));
+  };
+
+  const attackClick = (e, ply) => {
+    const fire = JSON.parse(e.target.attributes[1].value);
+    console.log(fire);
+    ply.board.placeAttack(fire);
+  };
+
+  const fireAttack = (ply) => {
+    const allAttackCells = document.querySelectorAll('.attacks');
+    allAttackCells.forEach((cell) => cell.addEventListener('click', (e) => attackClick(e, ply)));
+  };
+
   // EventListeners section end
 
   return {
@@ -67,6 +79,7 @@ const input = () => {
     attacksGrid,
     robotoGrid,
     placeChoice,
+    fireAttack,
   };
 };
 

@@ -80,27 +80,41 @@ const gameboard = () => {
 
   const illegalHandler = (value) => {
     if (value === 1) {
+      console.log('out of bounds');
       return 'out of bounds';
+    } if (value === 2) {
+      console.log('position already occupied');
+      return 'path is blocked by another ship';
     }
-    return 'path is blocked by another ship';
+    console.log('already in position');
+    return 'already in position';
   };
+
+  // Checks if ship is already in game
+  const isInGame = (ship) => inGame.some((item) => item.name === ship.name);
 
   const placeShip = (shipName, coor) => {
     const ship = getShip(shipName);
+    if (isInGame(ship)) return illegalHandler(3);
     // Returns due to out of bounds placement
     if (!isInbounds(shipName, coor)) return illegalHandler(1);
     const shipPath = makePath(ship, coor);
     if (occupied.length < 1) { // No ship has been placed yet
       ship.position = shipPath; // Set ship position
       shipPath.forEach((pos) => occupied.push(pos)); // Populate occupied array
+      inGame.push(ship);
     } else if (!isOverlay(shipPath)) { // Check if ships overlay
       ship.position = shipPath;
       shipPath.forEach((pos) => occupied.push(pos));
+      inGame.push(ship);
     } else {
       return illegalHandler(2); // Returns due to ships overlaying
     }
     // console.log(inGame);
-    inGame.push(ship);
+    if (inGame.length === 5) {
+      console.log('All ships in position');
+      return true;
+    }
     return ship;
   };
 
@@ -152,15 +166,22 @@ const gameboard = () => {
   const checkTarget = (coor) => {
     inGame.forEach((ship) => { // Checks if coor matches ship position
       if (ship.position.some((pos) => pos.join() === coor.join())) { // Succsessful attack
+        console.log('Hit');
         ship.isHit();
         success.push(coor);
-        nextAttack(); // Succsessful attacks create a queue for next attacks
+        // nextAttack(); // Succsessful attacks create a queue for next attacks
         if (ship.isSunk()) destroyed.push(ship);
         return true;
       }
       return false;
     });
+    console.log(destroyed);
     bombed.push(coor);
+    if (isGameOver()) {
+      console.log('Game Over');
+      return 'Game Over';
+    }
+    return bombed;
   };
 
   const placeAttack = (coor) => {
