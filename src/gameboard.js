@@ -9,8 +9,8 @@ const gameboard = () => {
   const ocean = [];
 
   const makeWater = () => { // Creates the 10 x 10 coordinate grid
-    for (let x = 0; x < 10; x += 1) {
-      for (let y = 0; y < 10; y += 1) {
+    for (let y = 0; y < 10; y += 1) {
+      for (let x = 0; x < 10; x += 1) {
         ocean.push([x, y]);
       }
     }
