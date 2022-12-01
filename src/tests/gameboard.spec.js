@@ -2,88 +2,70 @@ const gameboard = require('../gameboard');
 
 describe('Gameboard Factory Function', () => {
   const testBoard = gameboard();
-  it('returns and object', () => {
+  it('returns an object', () => {
     expect(typeof testBoard).toEqual('object');
   });
 
-  it('has a method of creating an array of length 100', () => {
+  it('returns an ocean of length 100', () => {
     expect(testBoard.ocean).toHaveLength(100);
-    expect(Array.isArray(testBoard.ocean)).toEqual(true);
   });
 
-  it('has an array that stores the 5 ship types', () => {
-    expect(testBoard.harbor).toHaveLength(5);
+  it('checks inbounds placement of ships', () => {
+    expect(testBoard.isInbounds([10, 10])).toEqual(false);
+    expect(testBoard.isInbounds([4, 4])).toEqual(true);
   });
 
-  it('has a number of arrays to track ship placement and attacked cells', () => {
-    expect(Array.isArray(testBoard.inGame)).toEqual(true);
-    expect(Array.isArray(testBoard.occupied)).toEqual(true);
-    expect(Array.isArray(testBoard.bombed)).toEqual(true);
-    expect(Array.isArray(testBoard.success)).toEqual(true);
+  it('checks overlapping ships', () => {
+    const overlapTest = gameboard();
+    overlapTest.occupied.push([4, 5], [5, 5], [6, 5], [0, 1], [0, 2], [0, 3]);
+    expect(overlapTest.occupied).toHaveLength(6);
+    expect(overlapTest.isOverlap([[2, 2], [2, 1]])).toEqual(false);
+    expect(overlapTest.isOverlap([[0, 3], [0, 2], [0, 1]])).toEqual(true);
   });
 
-  it('has a method of looking up ships from the harbor array', () => {
-    expect(typeof testBoard.getShip('battleship')).toEqual('object');
+  it('checks duplicate placement', () => {
+    const duplicateTest = gameboard();
+    duplicateTest.inGame.push(duplicateTest.harbor[0]); // Destroyer
+    expect(duplicateTest.inGame).toHaveLength(1);
+    expect(duplicateTest.isPlaced(duplicateTest.harbor[2])).toEqual(false); // Cruiser
+    expect(duplicateTest.isPlaced(duplicateTest.harbor[0])).toEqual(true); // Destroyer
   });
 
-  it('has a method of checking inbounds placement', () => {
-    testBoard.getShip('carrier').rotate();
-    expect(testBoard.isInbounds('battleship', [0, 0])).toEqual(true);
-    expect(testBoard.isInbounds('carrier', [0, 2])).toEqual(false);
+  it('tests validity of ship placement', () => {
+    testBoard.inGame.push(testBoard.harbor[4]);
+    expect(testBoard.isValPos(testBoard.harbor[0], [9, 5])).toEqual(false);
+    expect(testBoard.isValPos(testBoard.harbor[4], [3, 3])).toEqual(false);
+    expect(testBoard.isValPos(testBoard.harbor[1], [3, 7])).toEqual(true);
   });
 
-  it('has a method of creating a ship\'s path', () => {
-    const testPath = testBoard.makePath(testBoard.getShip('cruiser'), [2, 2]);
-    testPath.forEach((pos) => testBoard.occupied.push(pos));
-    expect(testPath).toHaveLength(3);
+  it('places ships after validity test', () => {
+    const placeTest = gameboard();
+    expect(typeof placeTest.placeShip(placeTest.harbor[4], [1, 2])).toEqual('object');
   });
 
-  it('has a method of checking overlapping paths', () => {
-    const vertShip = testBoard.getShip('submarine');
-    vertShip.rotate();
-    const vertPos = testBoard.makePath(vertShip, [3, 3]);
-    expect(testBoard.isOverlay(vertPos)).toEqual(true);
-    vertPos.forEach((pos) => testBoard.occupied.push(pos));
-    expect(testBoard.occupied).toHaveLength(6);
+  it('places attacks', () => {
+    const attackTest = gameboard();
+    attackTest.placeShip(attackTest.harbor[2], [3, 5]);
+    expect(attackTest.occupied).toHaveLength(3);
+    expect(attackTest.fire([5, 5]).length).toBeGreaterThan(0);
+    expect(attackTest.inGame[0].type.damage).toEqual(1);
+    expect(attackTest.destroyed).toHaveLength(0);
+    attackTest.fire([4, 5]);
+    attackTest.fire([3, 5]);
+    expect(attackTest.destroyed).toHaveLength(1);
+    expect(attackTest.bombed).toHaveLength(3);
+    attackTest.fire([1, 2]);
+    expect(attackTest.bombed).toHaveLength(4);
   });
 
-  it.todo('handles illegal placements');
-
-  it('places ships by populating the ship\'s position array and the occupied array', () => {
-    const testPlacement = testBoard.placeShip('destroyer', [0, 0]);
-    expect(testPlacement).toBeDefined();
-    expect(testBoard.occupied).toHaveLength(8);
-    const secondPlacement = testBoard.placeShip('carrier', [0, 0]);
-    expect(typeof secondPlacement).toEqual('string');
-    // expect(secondPlacement).toEqual('path is blocked by another ship');
-    expect(testBoard.occupied).toHaveLength(8);
-    expect(testBoard.inGame).toHaveLength(1);
-  });
-
-  it('places ships randomly', () => {
-    const testBoard2 = gameboard();
-    const random = testBoard2.randomShips();
-    expect(random).toBeDefined();
-    expect(testBoard2.inGame).toHaveLength(5);
-    expect(testBoard2.occupied).toHaveLength(17);
-    expect(testBoard2.inGame.some((item) => item.rotation === 'V')).toEqual(true);
-  });
-
-  it('places and tracks attacks', () => {
-    expect(testBoard.placeAttack([1, 1])).toBeDefined();
-    expect(testBoard.placeAttack([0, 0])).toHaveLength(2);
-    expect(testBoard.bombed.length).toBeGreaterThan(1);
-  });
-
-  it('places random attacks and creates queue for next attack after shot on target', () => {
-    const testBoard2 = gameboard();
-    const tester = testBoard2.placeShip('destroyer', [0, 5]);
-    expect(testBoard.inGame).toHaveLength(1);
-    testBoard2.placeAttack([1, 5]); // On target
-    testBoard2.randomAttack(); // From queue
-    testBoard2.randomAttack();
-    expect(testBoard2.bombed).toHaveLength(3);
-    expect(testBoard2.success).toHaveLength(2);
-    expect(tester.hits).toEqual(1);
+  it('creates an attack queue for the cpu', () => {
+    const qTest = gameboard();
+    expect(qTest.Q).toHaveLength(0);
+    qTest.placeShip(qTest.harbor[0], [0, 0]);
+    qTest.placeShip(qTest.harbor[1], [0, 1]);
+    qTest.placeShip(qTest.harbor[2], [0, 2]);
+    expect(qTest.inGame).toHaveLength(3);
+    qTest.fire([1, 0]);
+    expect(qTest.Q).toHaveLength(3);
   });
 });

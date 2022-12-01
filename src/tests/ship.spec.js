@@ -1,27 +1,26 @@
-const ship = require('../ship');
+const shipFac = require('../ship');
 
 describe('Ship Factory Function', () => {
-  const testShip = ship('destroyer', 3);
+  const testShip = shipFac('Tester', 2);
   it('returns an object', () => {
     expect(typeof testShip).toEqual('object');
   });
 
-  it('stores hits and has a method of incrementing hit counts', () => {
-    testShip.isHit();
-    expect(testShip.hits).toEqual(1);
-  });
-
-  it('has a method of rotating the ship from horizontal to vertical and back', () => {
+  test('can rotate ship', () => {
     testShip.rotate();
     expect(testShip.rotation).toEqual('V');
     testShip.rotate();
     expect(testShip.rotation).toEqual('H');
   });
 
-  it('has a sunk property and a method of reporting sunk status', () => {
+  it('increases damage count when hit', () => {
     testShip.isHit();
-    expect(testShip.isSunk()).toEqual(false);
+    expect(testShip.damage).toEqual(1);
+  });
+
+  it('reports destroyed ship', () => {
     testShip.isHit();
-    expect(testShip.isSunk()).toEqual(true);
+    expect(testShip.damage).toEqual(2);
+    expect(testShip.isSunk()).toBeTruthy();
   });
 });

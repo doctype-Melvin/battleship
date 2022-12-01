@@ -1,27 +1,26 @@
-const ship = (name, size) => ({
+const shipFac = (name, size) => ({
   name,
   size,
+  damage: 0,
   rotation: 'H',
-  hits: 0,
-  sunk: false,
   position: [],
   isHit() {
-    this.hits += 1;
-    return this.hits;
-  },
-  isSunk() {
-    if (this.hits === this.size) {
-      this.sunk = true;
-    }
-    return this.sunk;
+    this.damage += 1;
+    return this.damage;
   },
   rotate() {
-    if (this.rotation !== 'H') {
+    if (this.rotation !== 'V') {
+      this.rotation = 'V';
+    } else {
       this.rotation = 'H';
-      return this.rotation;
-    } this.rotation = 'V';
+    }
     return this.rotation;
+  },
+  isSunk() {
+    if (this.damage === this.size) {
+      return true;
+    } return false;
   },
 });
 
-module.exports = ship;
+module.exports = shipFac;

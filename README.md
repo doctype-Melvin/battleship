@@ -58,6 +58,9 @@ going from bottom left to bottom right has been achieved through the following C
 ```
 I've found this solution delightful.
 
+Another interesting point is code security. At a point in this project it occured to me,
+that my factory functions might return to many publicly accessible variables. 
+For future projects I'll have to give the privacy of my variables and methods more thought.
 ### Resources 
 [Paper](https://pageperso.lis-lab.fr/guilherme.fonseca/battleship_conf.pdf) discussing the most efficient algorithms for 
 battleship.

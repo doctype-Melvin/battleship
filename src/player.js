@@ -1,31 +1,45 @@
 const gameboard = require('./gameboard');
 
-const player = (id, opp) => {
-  let turn = false;
-  const board = gameboard();
+const player = (id, opp) => ({
+  id,
+  opp,
+  board: gameboard(),
+  turn: false,
+  ranCoor() {
+    const ranNum = (min = 0, max = 10) => {
+      const int = Math.floor(Math.random() * (max - min) + min);
+      return int;
+    };
+    const x = ranNum();
+    const y = ranNum();
+    return [x, y];
+  },
+  ranShip() {
+    while (this.board.inGame.length < this.board.harbor.length) {
+      this.board.harbor[2].type.rotate();
+      this.board.harbor.forEach((ship) => {
+        this.board.placeShip(ship, this.ranCoor());
+      });
+    }
+  },
+  ranFire() {
+    let target = this.ranCoor();
+    if (this.opp.board.Q.length > 0) {
+      const next = this.opp.board.Q.shift();
+      this.opp.board.fire(next);
+    } else if (!this.opp.board.known(target)
+    || this.opp.board.bombed.length < 1) {
+      this.opp.board.fire(target);
+    } else if (this.opp.board.known(target)) {
+      while (this.opp.board.known(target)) {
+        target = this.ranCoor();
+        if (!this.opp.board.known(target)) {
+          this.opp.board.fire(target);
+        }
+      }
+    }
+  },
 
-  const setShip = (ship, coor) => {
-    board.placeShip(ship, coor);
-  };
-  const fire = (coor) => {
-    opp.board.placeAttack(coor);
-    opp.turn = true;
-    turn = false;
-  };
-  const cpuFire = (opp) => {
-    opp.board.randomAttack();
-    opp.turn = true;
-    turn = false;
-  };
-  return {
-    id,
-    opp,
-    turn,
-    board,
-    setShip,
-    fire,
-    cpuFire,
-  };
-};
+});
 
 module.exports = player;
