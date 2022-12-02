@@ -6,6 +6,7 @@ const game = () => {
   const harborBtns = domInst.shipBtns;
   const leftGrid = domInst.playerOcean;
   const rightGrid = domInst.cpuOcean;
+  const rotation = domInst.rotateBtn;
   const interval = [1900, 1580, 2100, 2250, 1250, 2890];
   const random = () => interval[Math.floor(Math.random() * interval.length)];
 
@@ -21,18 +22,23 @@ const game = () => {
     let coor = null;
     harborBtns.forEach((btn) => btn.addEventListener('click', (e) => {
       ship = e.target.id;
-      console.log(ship);
     }));
+
     leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       coor = JSON.parse(e.target.attributes[1].value);
       ply.board.placeShip(ship, coor);
-      console.log(domInst.shipPlaced(ply));
-      console.log(e.target.attributes[1].value);
+      domInst.shipPlaced(ply);
       if (ply.board.allInPlace()) {
         cpu.ranShip();
         return placeAttacks(ply, cpu);
       }
     }));
+
+    rotation.addEventListener('click', () => {
+      if (ship === null) return;
+
+      ply.board.getShip(ship).type.rotate();
+    });
   };
 
   const startGame = () => {

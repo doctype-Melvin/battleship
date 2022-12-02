@@ -141,6 +141,7 @@ const gameboard = () => {
     isInbounds,
     isOverlap,
     isPlaced,
+    getShip,
     isValPos,
     placeShip,
     known,

@@ -10,8 +10,11 @@ const DOM = () => {
   menuBox.append(elementMaker('div', 'score', 'Score board', 'score'));
   menuBox.append(elementMaker('div', 'info', 'Game info message', 'info'));
   gameboard().harbor.forEach((ship) => menuBox.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase(), ship.name)));
+  menuBox.append(elementMaker('button', 'rotate', 'ROTATE', 'rotate'));
   menuBox.append(elementMaker('button', 'reset', 'RESET', 'reset'));
   const shipBtns = document.querySelectorAll('.shipBtn');
+  const rotateBtn = document.querySelector('.rotate');
+  const resetBtn = document.querySelector('.reset');
 
   // Grid factory
   const makeGrid = (id, side) => {
@@ -49,6 +52,8 @@ const DOM = () => {
     playerOcean,
     cpuOcean,
     shipBtns,
+    rotateBtn,
+    resetBtn,
     shipPlaced,
   };
 };
