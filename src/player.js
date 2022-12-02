@@ -18,7 +18,7 @@ const player = (id, opp) => ({
     while (this.board.inGame.length < this.board.harbor.length) {
       this.board.harbor[2].type.rotate();
       this.board.harbor.forEach((ship) => {
-        this.board.placeShip(ship, this.ranCoor());
+        this.board.placeShip(ship.name, this.ranCoor());
       });
     }
   },

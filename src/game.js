@@ -13,7 +13,7 @@ const game = () => {
     }));
   };
 
-  const placeShips = (ply) => {
+  const placeShips = (ply, cpu) => {
     let ship = null;
     let coor = null;
     harborBtns.forEach((btn) => btn.addEventListener('click', (e) => {
@@ -23,7 +23,11 @@ const game = () => {
     leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       coor = JSON.parse(e.target.attributes[1].value);
       ply.board.placeShip(ship, coor);
-      if (ply.board.allInPlace()) return placeAttacks();
+      if (ply.board.allInPlace()) {
+        cpu.ranShip();
+        console.log(cpu.board.inGame.length);
+        return placeAttacks(ply, cpu);
+      }
     }));
   };
 
@@ -32,7 +36,7 @@ const game = () => {
     let human = null;
     cpu = player('cpu', human);
     human = player('human', cpu);
-    placeShips(human);
+    placeShips(human, cpu);
   };
 
   return {
