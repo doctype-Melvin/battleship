@@ -7,6 +7,12 @@ const game = () => {
   const leftGrid = domInst.playerOcean;
   const rightGrid = domInst.cpuOcean;
 
+  const placeAttacks = () => {
+    rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
+      console.log(JSON.parse(e.target.attributes[1].value));
+    }));
+  };
+
   const placeShips = (ply) => {
     let ship = null;
     let coor = null;
@@ -16,14 +22,8 @@ const game = () => {
     }));
     leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       coor = JSON.parse(e.target.attributes[1].value);
-      console.log(ply.board.placeShip(ship, coor));
-    }));
-    console.log(ply.board.inGame);
-  };
-
-  const placeAttacks = () => {
-    rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
-      console.log(JSON.parse(e.target.attributes[1].value));
+      ply.board.placeShip(ship, coor);
+      if (ply.board.allInPlace()) return placeAttacks();
     }));
   };
 

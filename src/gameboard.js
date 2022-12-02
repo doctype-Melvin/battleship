@@ -124,6 +124,8 @@ const gameboard = () => {
     return bombed;
   };
 
+  const allInPlace = () => (inGame.length === 5);
+
   return {
     ocean,
     occupied,
@@ -131,6 +133,7 @@ const gameboard = () => {
     inGame,
     bombed,
     destroyed,
+    Q,
     isInbounds,
     isOverlap,
     isPlaced,
@@ -138,7 +141,7 @@ const gameboard = () => {
     placeShip,
     known,
     fire,
-    Q,
+    allInPlace,
   };
 };
 
