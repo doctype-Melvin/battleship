@@ -65,7 +65,7 @@ html, body,
     background-color: var(--lighter-shade);
 }
 
-.ships, .attacks, .placed {
+.ships, .attacks, .placed, .bombed {
     margin: 2px;
     border-radius: 2px;
 }
@@ -80,6 +80,10 @@ html, body,
 
 .placed {
     background-color: var(--darkest-shade);
+}
+
+.bombed {
+    background-color: var(--main-color);
 }
 
 .leftCellPlaced {
