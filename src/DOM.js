@@ -30,10 +30,20 @@ const DOM = () => {
   const playerOcean = document.querySelectorAll('.ships');
   const cpuOcean = document.querySelectorAll('.attacks');
 
+  // Change cell coloring
+  const shipPlaced = (player) => {
+    player.board.inGame.forEach((ship) => {
+      const shipPos = ship.type.position;
+
+      // [...shipPos].find((point) => [...playerOcean].find((data) => console.log(JSON.stringify(point) === data.attributes[1].value)));
+    });
+  };
+  // data.attributes[1].value
   return {
     playerOcean,
     cpuOcean,
     shipBtns,
+    shipPlaced,
   };
 };
 

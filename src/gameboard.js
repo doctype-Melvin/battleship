@@ -93,6 +93,8 @@ const gameboard = () => {
   const findShip = (coor) => inGame.filter((item) => item.type.position.find((pos) => pos.join() === coor.join()))[0];
   // Checks destroyed ship
   const isDestroyed = (ship) => ship.type.isSunk();
+  // Store all unbombed cells
+  const unknown = () => ocean.filter((item) => bombed.every((pos) => item.join() !== pos.join()));
   // Creates a attack queue for the cpu player
   const Q = [];
   const nextAttacks = (arr) => {
@@ -105,6 +107,7 @@ const gameboard = () => {
     const isFree = isIn.filter((pos) => !known(pos));
     const notInQ = isFree.filter((loc) => Q.every((el) => el.join() !== loc.join()));
     notInQ.forEach((coor) => Q.push(coor));
+    console.log(Q);
   };
 
   // Places attacks
@@ -113,6 +116,7 @@ const gameboard = () => {
       const target = findShip(coor);
       target.type.isHit();
       nextAttacks(coor);
+      console.log(`hit ${coor}`);
       if (isDestroyed(target)) {
         destroyed.push(target);
       } // Report success
@@ -142,6 +146,7 @@ const gameboard = () => {
     known,
     fire,
     allInPlace,
+    unknown,
   };
 };
 

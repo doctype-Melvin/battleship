@@ -40,12 +40,12 @@ describe('Gameboard Factory Function', () => {
 
   it('places ships after validity test', () => {
     const placeTest = gameboard();
-    expect(typeof placeTest.placeShip(placeTest.harbor[4], [1, 2])).toEqual('object');
+    expect(typeof placeTest.placeShip('cruiser', [1, 2])).toEqual('object');
   });
 
   it('places attacks', () => {
     const attackTest = gameboard();
-    attackTest.placeShip(attackTest.harbor[2], [3, 5]);
+    attackTest.placeShip('cruiser', [3, 5]);
     expect(attackTest.occupied).toHaveLength(3);
     expect(attackTest.fire([5, 5]).length).toBeGreaterThan(0);
     expect(attackTest.inGame[0].type.damage).toEqual(1);
@@ -61,11 +61,19 @@ describe('Gameboard Factory Function', () => {
   it('creates an attack queue for the cpu', () => {
     const qTest = gameboard();
     expect(qTest.Q).toHaveLength(0);
-    qTest.placeShip(qTest.harbor[0], [0, 0]);
-    qTest.placeShip(qTest.harbor[1], [0, 1]);
-    qTest.placeShip(qTest.harbor[2], [0, 2]);
+    qTest.placeShip('destroyer', [0, 0]);
+    qTest.placeShip('submarine', [0, 1]);
+    qTest.placeShip('cruiser', [0, 2]);
     expect(qTest.inGame).toHaveLength(3);
     qTest.fire([1, 0]);
     expect(qTest.Q).toHaveLength(3);
+  });
+
+  it('shows unknown coords', () => {
+    const unknownTest = gameboard();
+    unknownTest.bombed.push([0, 0], [0, 1], [0, 2], [0, 3]);
+    expect(unknownTest.bombed).toHaveLength(4);
+    expect(unknownTest.ocean).toHaveLength(100);
+    expect(unknownTest.unknown()).toHaveLength(96);
   });
 });

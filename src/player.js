@@ -27,16 +27,11 @@ const player = (id, opp) => ({
     if (this.opp.board.Q.length > 0) {
       const next = this.opp.board.Q.shift();
       this.opp.board.fire(next);
-    } else if (!this.opp.board.known(target)
-    || this.opp.board.bombed.length < 1) {
+    } else if (this.opp.board.bombed.length < 1) {
       this.opp.board.fire(target);
-    } else if (this.opp.board.known(target)) {
-      while (this.opp.board.known(target)) {
-        target = this.ranCoor();
-        if (!this.opp.board.known(target)) {
-          this.opp.board.fire(target);
-        }
-      }
+    } else {
+      target = this.opp.board.unknown()[Math.floor(Math.random() * this.opp.board.unknown().length)];
+      this.opp.board.fire(target);
     }
   },
 
