@@ -6,7 +6,10 @@ const DOM = () => {
   const attackGrid = document.getElementById('attacks');
   const menuBox = document.getElementById('menu');
 
-  gameboard().harbor.forEach((ship) => menuBox.append(elementMaker('button', 'shipBtn', ship.name, ship.name)));
+  menuBox.append(elementMaker('div', 'score', 'Score board', 'score'));
+  menuBox.append(elementMaker('div', 'info', 'Game info message', 'info'));
+  gameboard().harbor.forEach((ship) => menuBox.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase(), ship.name)));
+  menuBox.append(elementMaker('button', 'reset', 'RESET', 'reset'));
 
   const makeGrid = (id, side) => {
     for (let i = 0; i < 100; i += 1) {
