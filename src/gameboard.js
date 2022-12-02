@@ -49,7 +49,7 @@ const gameboard = () => {
   // Goes through inGame array to prevent duplicate ship types
   const isPlaced = (ship) => inGame.some((vessel) => ship.name === vessel.name);
   // Gets ship from harbor array
-  const getShip = (name) => harbor.find((ship) => ship.name === name).type;
+  const getShip = (name) => harbor.find((ship) => ship.name === name);
   // Creates the ship's path
   const makePath = (size, rot, coor) => {
     const path = [];
@@ -72,7 +72,8 @@ const gameboard = () => {
     return (isInbounds(position[position.length - 1]) && !isOverlap(position) && !isPlaced(ship));
   };
 
-  const placeShip = (ship, coor) => {
+  const placeShip = (shipName, coor) => {
+    const ship = getShip(shipName);
     if (isValPos(ship, coor)) { // Check placement validity
       position.forEach((pos) => ship.type.position.push(pos));
       position.forEach((pos) => occupied.push(pos));

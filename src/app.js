@@ -4,4 +4,4 @@ import './gameboard';
 const game = require('./game');
 
 const test = game();
-test.placeShips();
+test.startGame();
