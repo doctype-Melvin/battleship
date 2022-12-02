@@ -35,10 +35,16 @@ const DOM = () => {
     player.board.inGame.forEach((ship) => {
       const shipPos = ship.type.position;
 
-      // [...shipPos].find((point) => [...playerOcean].find((data) => console.log(JSON.stringify(point) === data.attributes[1].value)));
+      [...shipPos].forEach((point) => {
+        [...playerOcean].forEach((data) => {
+          if (data.attributes[1].value === JSON.stringify(point)) {
+            data.removeAttribute('class');
+            data.setAttribute('class', 'placed');
+          }
+        });
+      });
     });
   };
-  // data.attributes[1].value
   return {
     playerOcean,
     cpuOcean,

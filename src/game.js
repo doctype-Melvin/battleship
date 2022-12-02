@@ -26,7 +26,7 @@ const game = () => {
     leftGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       coor = JSON.parse(e.target.attributes[1].value);
       ply.board.placeShip(ship, coor);
-      domInst.shipPlaced(ply);
+      console.log(domInst.shipPlaced(ply));
       console.log(e.target.attributes[1].value);
       if (ply.board.allInPlace()) {
         cpu.ranShip();
