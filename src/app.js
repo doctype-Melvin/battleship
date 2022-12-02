@@ -1,6 +1,7 @@
 import '../style.css';
 import './gameboard';
 
-const DOM = require('./DOM');
+const game = require('./game');
 
-DOM();
+const test = game();
+test.placeShips();
