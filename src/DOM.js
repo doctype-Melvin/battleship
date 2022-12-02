@@ -48,6 +48,12 @@ const DOM = () => {
       });
     });
   };
+
+  const attackPlaced = (input) => {
+    input.target.removeAttribute('class');
+    input.target.setAttribute('class', 'bombed');
+  };
+
   return {
     playerOcean,
     cpuOcean,
@@ -55,6 +61,7 @@ const DOM = () => {
     rotateBtn,
     resetBtn,
     shipPlaced,
+    attackPlaced,
   };
 };
 

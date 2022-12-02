@@ -13,6 +13,7 @@ const game = () => {
   const placeAttacks = (ply, cpu) => {
     rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       cpu.board.fire(JSON.parse(e.target.attributes[1].value));
+      domInst.attackPlaced(e);
       setTimeout(() => cpu.ranFire(), random());
     }));
   };
