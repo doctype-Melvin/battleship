@@ -61,8 +61,11 @@ html, body,
     grid-template-columns: repeat(10, 1fr);
 }
 
-.ships, .attacks {
+.ships, .attacks{
     background-color: var(--lighter-shade);
+}
+
+.ships, .attacks, .placed {
     margin: 2px;
     border-radius: 2px;
 }
@@ -73,6 +76,10 @@ html, body,
 
 .ships:active, .attacks:active {
     background-color: var(--lightest-shade);
+}
+
+.placed {
+    background-color: var(--darkest-shade);
 }
 
 .leftCellPlaced {
