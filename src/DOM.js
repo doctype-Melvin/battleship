@@ -49,9 +49,20 @@ const DOM = () => {
     });
   };
 
-  const attackPlaced = (input) => {
-    input.target.removeAttribute('class');
-    input.target.setAttribute('class', 'bombed');
+  const attackPlaced = (input, array) => {
+    if (array.length !== 0) {
+      array.forEach((pos) => {
+        if (input.target.attributes[1].value === JSON.stringify(pos)) {
+          input.target.removeAttribute('class');
+          input.target.setAttribute('class', 'hit');
+        } else {
+          input.target.setAttribute('class', 'bombed');
+        }
+      });
+    } else {
+      input.target.removeAttribute('class');
+      input.target.setAttribute('class', 'bombed');
+    }
   };
 
   return {

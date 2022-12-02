@@ -6,6 +6,7 @@ const gameboard = () => {
   const occupied = []; // Stores all coordinates of ship positions
   const bombed = []; // Stores all tries
   const destroyed = []; // Stores all destroyed ships
+  const onTarget = [];
   const ocean = [];
 
   const makeWater = () => { // Creates the 10 x 10 coordinate grid
@@ -107,23 +108,24 @@ const gameboard = () => {
     const isFree = isIn.filter((pos) => !known(pos));
     const notInQ = isFree.filter((loc) => Q.every((el) => el.join() !== loc.join()));
     notInQ.forEach((coor) => Q.push(coor));
-    console.log(Q);
   };
-
   // Places attacks
   const fire = (coor) => {
     if (bullseye(coor)) {
       const target = findShip(coor);
       target.type.isHit();
       nextAttacks(coor);
+      onTarget.push(coor);
       console.log(`hit ${coor}`);
       if (isDestroyed(target)) {
         destroyed.push(target);
+        console.log(destroyed);
       } // Report success
       bombed.push(coor);
     } else if (!known(coor) && !bullseye(coor)) {
       // Report miss
       bombed.push(coor);
+      console.log('MISS');
     }
     return bombed;
   };
@@ -138,6 +140,7 @@ const gameboard = () => {
     bombed,
     destroyed,
     Q,
+    onTarget,
     isInbounds,
     isOverlap,
     isPlaced,
