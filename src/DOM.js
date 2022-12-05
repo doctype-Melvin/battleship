@@ -41,7 +41,7 @@ const DOM = () => {
       [...shipPos].forEach((point) => {
         [...playerOcean].forEach((data) => {
           if (data.attributes[1].value === JSON.stringify(point)) {
-            data.removeAttribute('class');
+            // data.removeAttribute('class');
             data.setAttribute('class', 'placed');
           }
         });
@@ -49,20 +49,26 @@ const DOM = () => {
     });
   };
 
-  const attackPlaced = (input, array) => {
+  const attackPlaced = (input, array) => { // input = div
     if (array.length !== 0) {
       array.forEach((pos) => {
-        if (input.target.attributes[1].value === JSON.stringify(pos)) {
-          input.target.removeAttribute('class');
-          input.target.setAttribute('class', 'hit');
+        if (input.attributes[1].value === JSON.stringify(pos)) {
+          input.removeAttribute('class');
+          input.setAttribute('class', 'hit');
         } else {
-          input.target.setAttribute('class', 'bombed');
+          input.setAttribute('class', 'bombed');
         }
       });
     } else {
-      input.target.removeAttribute('class');
-      input.target.setAttribute('class', 'bombed');
+      input.removeAttribute('class');
+      input.setAttribute('class', 'bombed');
     }
+  };
+
+  const findDiv = (value, nodelist) => {
+    const target = JSON.stringify(value);
+    const div = [...nodelist].filter((item) => item.attributes[1].value === target)[0];
+    return div;
   };
 
   return {
@@ -73,6 +79,7 @@ const DOM = () => {
     resetBtn,
     shipPlaced,
     attackPlaced,
+    findDiv,
   };
 };
 

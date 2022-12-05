@@ -79,7 +79,7 @@ html, body,
 }
 
 .placed {
-    background-color: var(--darkest-shade);
+    background-color: var(--lightest-shade);
 }
 
 .bombed {

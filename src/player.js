@@ -33,6 +33,7 @@ const player = (id, opp) => ({
       target = this.opp.board.unknown()[Math.floor(Math.random() * this.opp.board.unknown().length)];
       this.opp.board.fire(target);
     }
+    // console.log(opp.board.bombed[opp.board.bombed.length - 1]);
   },
 
 });

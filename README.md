@@ -25,8 +25,7 @@ However, the `.toEqual` matcher does the same equality test, is obviously named 
 
 ### General quirks
 At some point I've accidentally added a `type: module` property to my `package.json` file.
-This caused me a bit of a headache since this lead to Webpack throwing an error. I've really
-didn't notice that. 
+This caused me a bit of a headache since this lead to Webpack throwing an error. 
 Before finding the solution to this problem online, I've changed all my `imports` to
 `require` functions. The `require` is a built-in function of NodeJS that takes an external module,
 reads the file, executes and returns the export object - pretty much what I think the `import` 

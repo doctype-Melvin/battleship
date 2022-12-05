@@ -14,8 +14,18 @@ const game = () => {
   const placeAttacks = (ply, cpu) => {
     rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
       cpu.board.fire(JSON.parse(e.target.attributes[1].value));
-      domInst.attackPlaced(e, cpu.board.onTarget);
-      setTimeout(() => cpu.ranFire(), random());
+      console.log(e.target);
+      domInst.attackPlaced(e.target, cpu.board.onTarget);
+      setTimeout(() => {
+        cpu.ranFire();
+        const div = domInst.findDiv(ply.board.bombed[ply.board.bombed.length - 1], leftGrid);
+        console.log(ply.board.bombed[ply.board.bombed.length - 1], ply.board.onTarget, div);
+        domInst.attackPlaced(div, ply.board.onTarget)
+        // for every pos in ply bombed create a bombed class
+        // and for hits create hits class
+        ,
+        random();
+      });
     }));
   };
 
