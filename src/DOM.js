@@ -77,20 +77,39 @@ const DOM = () => {
     info.textContent = input;
     return input;
   };
-  const interval = [900, 1180, 790, 1250, 1890];
+  const interval = [900, 1180, 790, 1250, 1590];
   const random = () => interval[Math.floor(Math.random() * interval.length)];
+
+  const removeListeners = () => {
+    cpuOcean.forEach((node) => node.replaceWith(node.cloneNode(true)));
+  };
+  const isGameOver = (ply, cpu) => {
+    if (ply.board.destroyed.length === 5) {
+      console.log('Enemy destroyed our fleet');
+      removeListeners();
+      return reportStatus('Enemy destroyed our fleet');
+    } if (cpu.board.destroyed.length === 5) {
+      console.log('We destroyed our enemy!');
+      removeListeners();
+      return reportStatus('We destroyed our enemy!');
+    } return false;
+  };
+
   const playGame = (e, ply, cpu) => {
     if (cpu.board.fire(JSON.parse(e.target.attributes[1].value)) === null) return null;
     cpu.board.fire(JSON.parse(e.target.attributes[1].value));
     attackPlaced(e.target, cpu.board.onTarget);
-    reportStatus();
-    setTimeout(() => {
-      cpu.ranFire();
-      const div = findDiv(ply.board.bombed[ply.board.bombed.length - 1], playerOcean);
-      attackPlaced(div, ply.board.onTarget);
-    }, random());
+    isGameOver(ply, cpu);
+    if (!isGameOver(ply, cpu)) {
+      setTimeout(() => {
+        cpu.ranFire();
+        const div = findDiv(ply.board.bombed[ply.board.bombed.length - 1], playerOcean);
+        attackPlaced(div, ply.board.onTarget);
+        isGameOver(ply, cpu);
+      }, random());
+    }
   };
-
+  // Game over should prevent cpu from making another attack
   return {
     playerOcean,
     cpuOcean,
