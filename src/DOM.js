@@ -71,6 +71,28 @@ const DOM = () => {
     return div;
   };
 
+  const info = document.querySelector('.info');
+  const reportStatus = (input) => {
+    if (input === '') return 'Whoops';
+    info.textContent = input;
+    return input;
+  };
+  const interval = [900, 1180, 2100, 790, 1250, 1890];
+  const random = () => interval[Math.floor(Math.random() * interval.length)];
+  const playGame = (e, ply, cpu) => {
+    if (cpu.board.fire(JSON.parse(e.target.attributes[1].value)) === null) return null;
+    cpu.board.fire(JSON.parse(e.target.attributes[1].value));
+    attackPlaced(e.target, cpu.board.onTarget);
+    reportStatus();
+    setTimeout(() => {
+      cpu.ranFire();
+      const div = findDiv(ply.board.bombed[ply.board.bombed.length - 1], playerOcean);
+      attackPlaced(div, ply.board.onTarget)
+      ,
+      random();
+    });
+  };
+
   return {
     playerOcean,
     cpuOcean,
@@ -79,7 +101,9 @@ const DOM = () => {
     resetBtn,
     shipPlaced,
     attackPlaced,
+    playGame,
     findDiv,
+    reportStatus,
   };
 };
 

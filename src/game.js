@@ -8,24 +8,36 @@ const game = () => {
   const rightGrid = domInst.cpuOcean;
   const rotation = domInst.rotateBtn;
   const reset = domInst.resetBtn;
-  const interval = [1900, 1580, 2100, 2250, 1250, 2890];
-  const random = () => interval[Math.floor(Math.random() * interval.length)];
+
+  const removeListeners = () => {
+    rightGrid.forEach((node) => node.replaceWith(node.cloneNode(true)));
+  };
+  const isGameOver = (ply, cpu) => {
+    if (ply.board.destroyed.length === 5) {
+      console.log('Enemy destroyed our fleet');
+      removeListeners();
+      return domInst.reportStatus('Enemy destroyed our fleet');
+    } if (cpu.board.destroyed.length === 5) {
+      console.log('We destroyed our enemy!');
+      removeListeners();
+      return domInst.reportStatus('We destroyed our enemy!');
+    } return null;
+  };
 
   const placeAttacks = (ply, cpu) => {
     rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
-      cpu.board.fire(JSON.parse(e.target.attributes[1].value));
-      console.log(e.target);
-      domInst.attackPlaced(e.target, cpu.board.onTarget);
-      setTimeout(() => {
-        cpu.ranFire();
-        const div = domInst.findDiv(ply.board.bombed[ply.board.bombed.length - 1], leftGrid);
-        console.log(ply.board.bombed[ply.board.bombed.length - 1], ply.board.onTarget, div);
-        domInst.attackPlaced(div, ply.board.onTarget)
-        // for every pos in ply bombed create a bombed class
-        // and for hits create hits class
-        ,
-        random();
-      });
+      domInst.playGame(e, ply, cpu);
+      // cpu.board.fire(JSON.parse(e.target.attributes[1].value));
+      // domInst.attackPlaced(e.target, cpu.board.onTarget);
+      // domInst.reportStatus();
+      // setTimeout(() => {
+      //   cpu.ranFire();
+      //   const div = domInst.findDiv(ply.board.bombed[ply.board.bombed.length - 1], leftGrid);
+      //   domInst.attackPlaced(div, ply.board.onTarget)
+      //   ,
+      //   random();
+      // });
+      isGameOver(ply, cpu);
     }));
   };
 

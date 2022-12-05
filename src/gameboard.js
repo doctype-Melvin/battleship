@@ -111,6 +111,7 @@ const gameboard = () => {
   };
   // Places attacks
   const fire = (coor) => {
+    if (known(coor)) return null;
     if (bullseye(coor)) {
       const target = findShip(coor);
       target.type.isHit();
