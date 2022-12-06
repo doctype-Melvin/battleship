@@ -23,6 +23,12 @@ However, the `.toEqual` matcher does the same equality test, is obviously named 
  but doesn't lead to confusing and unwanted side effects.
 `.toEqual` should be the default for comparisons in unit testing.
 
+## MVC Model - View - Controller
+The MVC architectual design pattern had its big moment at the end of this project. 
+I figured it would be helpful if the different modules could communicate with each other. That's where
+the MVC comes in. 
+
+
 ### General quirks
 At some point I've accidentally added a `type: module` property to my `package.json` file.
 This caused me a bit of a headache since this lead to Webpack throwing an error. 

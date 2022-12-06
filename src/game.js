@@ -1,13 +1,12 @@
 const player = require('./player');
-const DOM = require('./DOM');
-
+const displayController = require('./displayController');
+// MVC Controller
 const game = () => {
-  const domInst = DOM();
+  const domInst = displayController();
   const harborBtns = domInst.shipBtns;
   const leftGrid = domInst.playerOcean;
   const rightGrid = domInst.cpuOcean;
-  const rotation = domInst.rotateBtn;
-  const reset = domInst.resetBtn;
+  const rotate = domInst.rotateBtn;
 
   const placeAttacks = (ply, cpu) => {
     rightGrid.forEach((cell) => cell.addEventListener('click', (e) => {
@@ -19,14 +18,14 @@ const game = () => {
     let ship = null;
     let coor = null;
 
-    reset.addEventListener('click', () => {
-      ply.ranShip();
-      domInst.shipPlaced(ply);
-      if (ply.board.allInPlace()) {
-        cpu.ranShip();
-        return placeAttacks(ply, cpu);
-      }
-    });
+    // random.addEventListener('click', () => {
+    //   ply.ranShip();
+    //   domInst.shipPlaced(ply);
+    //   if (ply.board.allInPlace()) {
+    //     cpu.ranShip();
+    //     return placeAttacks(ply, cpu);
+    //   }
+    // });
 
     harborBtns.forEach((btn) => btn.addEventListener('click', (e) => {
       ship = e.target.id;
@@ -42,7 +41,7 @@ const game = () => {
       }
     }));
 
-    rotation.addEventListener('click', () => {
+    rotate.addEventListener('click', () => {
       if (ship === null) return;
 
       ply.board.getShip(ship).type.rotate();
@@ -59,6 +58,7 @@ const game = () => {
 
   return {
     startGame,
+    placeShips,
   };
 };
 

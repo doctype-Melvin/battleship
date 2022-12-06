@@ -1,5 +1,5 @@
 const shipFac = require('./ship');
-
+// MVC Model
 const gameboard = () => {
 // Arrays for tracking position and game progress
   const inGame = []; // Stores placed ships

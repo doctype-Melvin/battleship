@@ -1,20 +1,21 @@
+const game = require('./game');
 const gameboard = require('./gameboard');
 const elementMaker = require('./helper');
-
-const DOM = () => {
+// MVC View
+const displayController = () => {
+  // The sections in main
   const shipsGrid = document.getElementById('ships');
   const attackGrid = document.getElementById('attacks');
   const menuBox = document.getElementById('menu');
 
   // Elements of the menu section
-  menuBox.append(elementMaker('div', 'score', 'Score board', 'score'));
+  menuBox.append(elementMaker('button', 'reset', 'Play Game', 'restart'));
   menuBox.append(elementMaker('div', 'info', 'Game info message', 'info'));
   gameboard().harbor.forEach((ship) => menuBox.append(elementMaker('button', 'shipBtn', ship.name.toUpperCase(), ship.name)));
   menuBox.append(elementMaker('button', 'rotate', 'ROTATE', 'rotate'));
-  menuBox.append(elementMaker('button', 'reset', 'RESET', 'reset'));
+  const playBtn = document.querySelector('.reset');
   const shipBtns = document.querySelectorAll('.shipBtn');
   const rotateBtn = document.querySelector('.rotate');
-  const resetBtn = document.querySelector('.reset');
 
   // Grid factory
   const makeGrid = (id, side) => {
@@ -30,6 +31,7 @@ const DOM = () => {
   makeGrid('ships', shipsGrid);
   makeGrid('attacks', attackGrid);
 
+  // Nodelists
   const playerOcean = document.querySelectorAll('.ships');
   const cpuOcean = document.querySelectorAll('.attacks');
 
@@ -77,7 +79,8 @@ const DOM = () => {
     info.textContent = input;
     return input;
   };
-  const interval = [900, 1180, 790, 1250, 1590];
+
+  const interval = [900, 1180, 790, 1150, 1590];
   const random = () => interval[Math.floor(Math.random() * interval.length)];
 
   const removeListeners = () => {
@@ -109,13 +112,15 @@ const DOM = () => {
       }, random());
     }
   };
+
   // Game over should prevent cpu from making another attack
   return {
     playerOcean,
     cpuOcean,
     shipBtns,
     rotateBtn,
-    resetBtn,
+    playBtn,
+    makeGrid,
     shipPlaced,
     attackPlaced,
     playGame,
@@ -124,4 +129,4 @@ const DOM = () => {
   };
 };
 
-module.exports = DOM;
+module.exports = displayController;
