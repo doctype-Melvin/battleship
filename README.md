@@ -7,6 +7,8 @@ There are 5 ships:
 - Submarine (3)
 - Destroyer (2)
 
+[Live](https://doctype-melvin.github.io/battleship/)
+
 ## Approach
 I've took some of the new knowledge from TOP's Computer Science chapter and applied it to the project at hand. 
 To create the random attacks of the computer player, I've decided to construct a queue after a successful attack.
@@ -68,4 +70,4 @@ going from bottom left to bottom right has been achieved through the following C
     transform: rotate(180deg);
 }
 ```
-I've found this solution delightful.
+I've found this solution to be delightful.
