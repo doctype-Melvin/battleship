@@ -13,6 +13,14 @@ To create the random attacks of the computer player, I've decided to construct a
 Going through all the neighboring (legal) cells, the CPU will place the attack according to the first element in the
 queue. Right now it will take some time for the CPU to actually destroy the player's ship, but for now that's ok.
 
+Besides that, I've tried to implement the MVC pattern, which to some extend was successful. I definetly have to re-
+visit that pattern again, since it's a big concept in regards to several JS frameworks.
+
+## Functionality
+The app can create randomly placed ships, or can rotate player selected ships. The AI places attacks randomly, but if it
+shoots on target, it will try to attack neighboring cells.
+There is some game info displayed in an info box. Players can restart the game (though this feature - besides others - 
+needs some refactoring). 
 
 ## Testing with JEST
 Quick recap: `==` uses type conversion before comparing two values; converts to primitive value.
@@ -24,10 +32,9 @@ However, the `.toEqual` matcher does the same equality test, is obviously named 
 `.toEqual` should be the default for comparisons in unit testing.
 
 ## MVC Model - View - Controller
-The MVC architectual design pattern had its big moment at the end of this project. 
+The MVC architectual design pattern had it's big moment at the end of this project. 
 I figured it would be helpful if the different modules could communicate with each other. That's where
 the MVC comes in. 
-
 
 ### General quirks
 At some point I've accidentally added a `type: module` property to my `package.json` file.
@@ -62,10 +69,3 @@ going from bottom left to bottom right has been achieved through the following C
 }
 ```
 I've found this solution delightful.
-
-Another interesting point is code security. At a point in this project it occured to me,
-that my factory functions might return to many publicly accessible variables. 
-For future projects I'll have to give the privacy of my variables and methods more thought.
-### Resources 
-[Paper](https://pageperso.lis-lab.fr/guilherme.fonseca/battleship_conf.pdf) discussing the most efficient algorithms for 
-battleship.

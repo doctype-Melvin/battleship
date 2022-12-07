@@ -29,7 +29,7 @@ html, body,
     " . leftBoard controls rightBoard ."
     "footer footer footer footer footer";
     background: var(--darkest-shade);
-    background: linear-gradient(45deg, var(--got-hit) 35%, var(--main-color) 65%, var(--lighter-shade) 100%); 
+    background: linear-gradient(45deg, var(--main-color) 0%, var(--lighter-shade) 100%); 
 }
 
 .header {
