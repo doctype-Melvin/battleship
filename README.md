@@ -71,3 +71,6 @@ going from bottom left to bottom right has been achieved through the following C
 }
 ```
 I've found this solution to be delightful.
+
+### Preview
+![preview-image]
