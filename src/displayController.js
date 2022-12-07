@@ -67,9 +67,9 @@ const viewer = ((gameboards) => {
   // Report function displays messages in infoBox element
   const statusReport = (element, status) => {
     switch (status) {
-      case 1: element.textContent = 'Enemy destroyed our fleet!';
+      case 1: element.textContent = 'Enemy destroyed your fleet!';
         break;
-      case 2: element.textContent = 'Victory! We destroyed our enemy!';
+      case 2: element.textContent = 'Victory! \n We destroyed our enemy!';
         break;
       case 3: element.textContent = 'Vertical';
         break;
@@ -86,12 +86,10 @@ const viewer = ((gameboards) => {
   // Game over evaluation
   const isGameOver = (ply, cpu) => {
     if (ply.board.destroyed.length === 5) {
-      console.log('Enemy destroyed our fleet');
       removeListeners(right);
       statusReport(infoBox, 1);
       return true;
     } if (cpu.board.destroyed.length === 5) {
-      console.log('We destroyed our enemy!');
       removeListeners(right);
       statusReport(infoBox, 2);
       return true;
