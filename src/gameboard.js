@@ -117,16 +117,16 @@ const gameboard = () => {
       target.type.isHit();
       nextAttacks(coor);
       onTarget.push(coor);
-      console.log(`hit ${coor}`);
+      // console.log(`hit ${coor}`);
       if (isDestroyed(target)) {
         destroyed.push(target);
-        console.log(destroyed);
+        // console.log(destroyed);
       } // Report success
       bombed.push(coor);
     } else if (!known(coor) && !bullseye(coor)) {
       // Report miss
       bombed.push(coor);
-      console.log('MISS');
+      // console.log('MISS');
     }
     return bombed;
   };

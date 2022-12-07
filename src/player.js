@@ -4,7 +4,6 @@ const player = (id, opp) => ({
   id,
   opp,
   board: gameboard(),
-  turn: false,
   ranCoor() {
     const ranNum = (min = 0, max = 10) => {
       const int = Math.floor(Math.random() * (max - min) + min);

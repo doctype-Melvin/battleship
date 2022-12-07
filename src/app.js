@@ -3,5 +3,4 @@ import './gameboard';
 
 const game = require('./game');
 
-const test = game();
-test.startGame();
+game;

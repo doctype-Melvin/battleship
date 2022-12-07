@@ -110,6 +110,7 @@ html, body,
     background-color: var(--lightest-shade);
     padding: 5px 10px;
     border-radius: 5px;
+    text-align: center;
 }
 
 .shipBtn, .reset, .rotate, .random {
