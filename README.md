@@ -10,7 +10,7 @@ There are 5 ships:
 [Live](https://doctype-melvin.github.io/battleship/)
 
 ## Approach
-I've took some of the new knowledge from TOP's Computer Science chapter and applied it to the project at hand. 
+I've taken some of the new knowledge from TOP's Computer Science chapter and applied it to the project at hand. 
 To create the random attacks of the computer player, I've decided to construct a queue after a successful attack.
 Going through all the neighboring (legal) cells, the CPU will place the attack according to the first element in the
 queue. Right now it will take some time for the CPU to actually destroy the player's ship, but for now that's ok.
